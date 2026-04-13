@@ -15,6 +15,7 @@ const popularCities = [
 function SearchBox({ city, setCity, onSearch }) {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const inputRef = useRef(null);
   const wrapperRef = useRef(null);
 
   const handleInputChange = (e) => {
@@ -37,7 +38,7 @@ function SearchBox({ city, setCity, onSearch }) {
     setCity(suggestion);
     setSuggestions([]);
     setShowSuggestions(false);
-    onSearch(); // Esto ahora ejecuta handleSearch que usa la ciudad correcta
+    onSearch();
   };
 
   useEffect(() => {
@@ -61,6 +62,7 @@ function SearchBox({ city, setCity, onSearch }) {
     <div className="search-box" ref={wrapperRef}>
       <div className="search-input-container">
         <input
+          ref={inputRef}
           type="text"
           placeholder="Ej: Madrid, London, Tokyo..."
           value={city}
@@ -71,14 +73,20 @@ function SearchBox({ city, setCity, onSearch }) {
         <button onClick={onSearch}>Buscar</button>
       </div>
       
+      {/* Dropdown de sugerencias - ahora posicionado correctamente */}
       {showSuggestions && suggestions.length > 0 && (
-        <ul className="suggestions-list">
+        <div className="suggestions-dropdown">
           {suggestions.map((suggestion, index) => (
-            <li key={index} onClick={() => selectSuggestion(suggestion)}>
-              🔍 {suggestion}
-            </li>
+            <div 
+              key={index} 
+              className="suggestion-item"
+              onClick={() => selectSuggestion(suggestion)}
+            >
+              <span className="suggestion-icon">🔍</span>
+              <span className="suggestion-text">{suggestion}</span>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

@@ -1,15 +1,10 @@
-.weather-info {
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
+/* === BASE === */
 .App {
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
-  background: #f5f5f5;  /* ← Gris claro profesional */
-  color: #333;  /* Texto oscuro para contraste */
+  background: #f5f5f5;
+  color: #333;
   padding: 20px;
 }
 
@@ -20,24 +15,43 @@ h1 {
   color: #222;
 }
 
+
+/* === BUSCADOR === */
 .search-box {
+  position: relative;
   margin: 30px auto;
+  max-width: 400px;
 }
 
-input {
+.search-input-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: nowrap;  /* ← Cambiado: evita que el botón se baje */
+}
+
+.search-input-container input {
   padding: 12px 20px;
   width: 250px;
   font-size: 16px;
   background: white;
-  border: 1px solid #ddd;
+  border: 2px solid #e0e0e0;
+  border-radius: 25px;
+  outline: none;
+  transition: all 0.3s ease;
   color: #333;
 }
 
-input::placeholder {
+.search-input-container input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.search-input-container input::placeholder {
   color: #999;
 }
 
-button {
+.search-input-container button {
   padding: 12px 30px;
   font-size: 16px;
   background-color: #007bff;
@@ -45,28 +59,98 @@ button {
   border: none;
   border-radius: 25px;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: all 0.3s ease;
+  white-space: nowrap;  /* ← Evita que el texto del botón se rompa */
 }
 
-button:hover {
-  transform: scale(1.05);
+.search-input-container button:hover {
   background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
 }
 
-.error {
-  color: #ffeb3b;
-  font-size: 1.2rem;
-  margin-top: 20px;
+
+/* === DROPDOWN DE SUGERENCIAS === */
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 5px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  max-height: 250px;
+  overflow-y: auto;
 }
 
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.suggestion-item:hover {
+  background: #f5f5f5;
+}
+
+.suggestion-icon {
+  font-size: 14px;
+  color: #666;
+}
+
+.suggestion-text {
+  flex: 1;
+  color: #333;
+  font-size: 14px;
+}
+
+/* Scroll del dropdown */
+.suggestions-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* === TARJETA DEL CLIMA === */
 .weather-info {
-  background: white !important;  /* Fondo blanco sólido */
+  background: white !important;
   border-radius: 20px;
   padding: 30px;
   max-width: 400px;
   margin: 20px auto;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);  /* Sombra elegante */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   color: #333;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.weather-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.weather-header h2 {
+  margin: 0;
 }
 
 .temperature {
@@ -91,75 +175,121 @@ button:hover {
   font-size: 0.9rem;
 }
 
-
-/* Autocompletado */
-.search-input-container {
-  position: relative;
+/* === BOTÓN FAVORITO === */
+.favorite-btn {
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  transition: all 0.2s;
 }
 
-.suggestions-list {
-  position: absolute;
-  top: 50px;
-  left: 50%;
-  transform: translateX(-50%);
+.favorite-btn:hover {
+  transform: scale(1.1);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.favorite-btn.active {
+  background: rgba(255, 215, 0, 0.2);
+}
+
+/* === SECCIÓN DE FAVORITOS === */
+.favorites-section {
   background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  list-style: none;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 20px auto;
+  max-width: 400px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  color: #333;
+}
+
+.favorites-section h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+}
+
+.favorites-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.favorite-item {
+  background: #f0f0f0;
+  border-radius: 20px;
+  padding: 5px 10px 5px 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.favorite-city-name {
+  cursor: pointer;
+  transition: transform 0.2s;
+  color: #333;
+}
+
+.favorite-city-name:hover {
+  transform: scale(1.05);
+  text-decoration: underline;
+}
+
+.remove-favorite {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
   padding: 0;
   margin: 0;
-  width: 250px;
-  z-index: 1000;
-  overflow: hidden;
+  width: auto;
+  box-shadow: none;
+  color: #999;
 }
 
-.suggestions-list li {
-  padding: 10px 15px;
-  cursor: pointer;
-  color: #333;
-  transition: background 0.2s;
-  border-bottom: 1px solid #eee;
+.remove-favorite:hover {
+  transform: scale(1.1);
+  background: none;
+  box-shadow: none;
+  color: #ff4444;
 }
 
-.suggestions-list li:hover {
-  background: #f0f0f0;
+.no-favorites {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin: 0;
 }
 
-.suggestions-list li:last-child {
-  border-bottom: none;
+/* === ERROR === */
+.error {
+  color: #d32f2f;
+  font-size: 1rem;
+  margin-top: 20px;
+  background: #ffebee;
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 25px;
 }
 
-/* Animación de entrada */
-.weather-info {
-  animation: fadeInUp 0.6s ease-out;
+/* === FOOTER === */
+footer {
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.7;
+  border-top: 1px solid #ddd;
+  color: #666;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Hover en botones */
-button {
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-/* Spinner de carga */
+/* === LOADING SPINNER === */
 .loading-container {
   display: flex;
   flex-direction: column;
@@ -182,114 +312,18 @@ button:hover {
   100% { transform: rotate(360deg); }
 }
 
-/* Favoritos */
-.favorites-section {
-  background: white;
-  border-radius: 15px;
-  padding: 15px;
-  margin: 20px auto;
-  max-width: 400px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-  color: #333;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.favorites-section h3 {
-  margin: 0 0 10px 0;
-  font-size: 1.2rem;
-}
-
-.favorites-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-}
-
-.favorite-item {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  padding: 5px 10px 5px 15px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.favorite-city-name {
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.favorite-city-name:hover {
-  transform: scale(1.05);
-  text-decoration: underline;
-}
-
-.remove-favorite {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 12px;
-  padding: 0;
-  margin: 0;
-  width: auto;
-  box-shadow: none;
-}
-
-.remove-favorite:hover {
-  transform: scale(1.1);
-  background: none;
-  box-shadow: none;
-}
-
-.no-favorites {
-  font-size: 0.9rem;
-  opacity: 0.8;
-  margin: 0;
-}
-
-/* Header del clima con botón de favorito */
-.weather-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.weather-header h2 {
-  margin: 0;
-}
-
-.favorite-btn {
-  background: rgba(255, 255, 255, 0.3);
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.favorite-btn:hover {
-  transform: scale(1.1);
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.favorite-btn.active {
-  background: rgba(255, 215, 0, 0.3);
-}
-
-/* footer */
-footer {
-  color: #666 !important;
-  border-top-color: #ddd !important;
-}
-
-
-/* Móviles */
+/* === RESPONSIVE === */
 @media (max-width: 600px) {
   .App h1 {
     font-size: 1.8rem;
@@ -304,12 +338,25 @@ footer {
     font-size: 3rem;
   }
   
-  input {
+  /* En móvil sí permitimos que se apilen si es necesario */
+  .search-input-container {
+    flex-wrap: wrap;  /* En móvil sí puede bajar si la pantalla es muy pequeña */
+  }
+  
+  .search-input-container input {
     width: 180px;
+  }
+  
+  .suggestions-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 5px;
   }
 }
 
-/* Tablets */
+
 @media (min-width: 601px) and (max-width: 1024px) {
   .weather-info {
     max-width: 500px;
