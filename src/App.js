@@ -16,8 +16,8 @@ function App() {
 
   const API_KEY = '91ca0e29e5a576e51887bc6e349bbd9d';
 
-  // Definir fetchWeather con useCallback para poder usarlo en useEffect
-  const fetchWeather = useCallback(async (cityName = city) => {
+  // Función para obtener clima por nombre de ciudad
+  const fetchWeatherByCity = useCallback(async (cityName) => {
     if (!cityName) return;
     
     setLoading(true);
@@ -35,7 +35,41 @@ function App() {
     } finally {
       setLoading(false);
     }
-  }, [city, API_KEY]);
+  }, [API_KEY]);
+
+  // Función para obtener clima por coordenadas (devuelve ciudad correcta)
+  const fetchWeatherByCoords = useCallback(async (lat, lon) => {
+    setLoading(true);
+    setError('');
+    
+    try {
+      // Primero obtenemos el clima
+      const weatherResponse = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=es`
+      );
+      
+      // Luego usamos la API de reverse geocoding para obtener la CIUDAD (no el barrio)
+      const geoResponse = await axios.get(
+        `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${API_KEY}`
+      );
+      
+      // geoResponse.data[0] contiene: name (ciudad), state, country
+      const cityName = geoResponse.data[0]?.name || weatherResponse.data.name;
+      
+      // Actualizamos el weather con el nombre correcto de la ciudad
+      const updatedWeather = {
+        ...weatherResponse.data,
+        name: cityName
+      };
+      
+      setWeather(updatedWeather);
+      setCity(cityName);
+    } catch (err) {
+      setError('No se pudo obtener el clima de tu ubicación');
+    } finally {
+      setLoading(false);
+    }
+  }, [API_KEY]);
 
   // Cargar favoritos al iniciar
   useEffect(() => {
@@ -56,37 +90,34 @@ function App() {
       if (navigator.geolocation) {
         setLoading(true);
         navigator.geolocation.getCurrentPosition(
-          async (position) => {
+          (position) => {
             const { latitude, longitude } = position.coords;
-            try {
-              const response = await axios.get(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric&lang=es`
-              );
-              setWeather(response.data);
-              setCity(response.data.name);
-              setError('');
-            } catch (err) {
-              setError('No se pudo obtener el clima de tu ubicación');
-              fetchWeather('Madrid');
-            } finally {
-              setLoading(false);
-            }
+            fetchWeatherByCoords(latitude, longitude);
           },
           (error) => {
             console.log('Error de geolocalización:', error);
             setError('No pudimos obtener tu ubicación. Busca una ciudad manualmente.');
             setLoading(false);
-            fetchWeather('Madrid');
+            // Ciudad por defecto
+            fetchWeatherByCity('Madrid');
           }
         );
       } else {
         setError('Tu navegador no soporta geolocalización');
-        fetchWeather('Madrid');
+        fetchWeatherByCity('Madrid');
       }
     };
 
     getLocationOnLoad();
-  }, [fetchWeather, API_KEY]); // Agregamos las dependencias correctas
+  }, [fetchWeatherByCoords, fetchWeatherByCity]);
+
+  const handleSearch = (searchCity) => {
+    // Usamos la ciudad que viene del parámetro o la del estado
+    const cityToSearch = searchCity || city;
+    if (cityToSearch) {
+      fetchWeatherByCity(cityToSearch);
+    }
+  };
 
   const addFavorite = (cityName) => {
     if (!favorites.includes(cityName)) {
@@ -102,7 +133,7 @@ function App() {
 
   const selectFavoriteCity = (cityName) => {
     setCity(cityName);
-    fetchWeather(cityName);
+    fetchWeatherByCity(cityName);
   };
 
   const isFavorite = (cityName) => favorites.includes(cityName);
@@ -114,7 +145,7 @@ function App() {
       <SearchBox 
         city={city}
         setCity={setCity}
-        onSearch={() => fetchWeather()}
+        onSearch={() => handleSearch()}
       />
 
       <Favorites 

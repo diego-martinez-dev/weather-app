@@ -17,7 +17,6 @@ function SearchBox({ city, setCity, onSearch }) {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const wrapperRef = useRef(null);
 
-  // Filtrar sugerencias mientras el usuario escribe
   const handleInputChange = (e) => {
     const value = e.target.value;
     setCity(value);
@@ -26,7 +25,7 @@ function SearchBox({ city, setCity, onSearch }) {
       const filtered = popularCities.filter(cityName =>
         cityName.toLowerCase().includes(value.toLowerCase())
       );
-      setSuggestions(filtered.slice(0, 6)); // Máximo 6 sugerencias
+      setSuggestions(filtered.slice(0, 6));
       setShowSuggestions(true);
     } else {
       setSuggestions([]);
@@ -34,15 +33,13 @@ function SearchBox({ city, setCity, onSearch }) {
     }
   };
 
-  // Seleccionar una sugerencia
   const selectSuggestion = (suggestion) => {
     setCity(suggestion);
     setSuggestions([]);
     setShowSuggestions(false);
-    onSearch(); // Buscar automáticamente al seleccionar
+    onSearch(); // Esto ahora ejecuta handleSearch que usa la ciudad correcta
   };
 
-  // Cerrar sugerencias al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -74,7 +71,6 @@ function SearchBox({ city, setCity, onSearch }) {
         <button onClick={onSearch}>Buscar</button>
       </div>
       
-      {/* Sugerencias */}
       {showSuggestions && suggestions.length > 0 && (
         <ul className="suggestions-list">
           {suggestions.map((suggestion, index) => (
