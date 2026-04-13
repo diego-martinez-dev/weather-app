@@ -1,38 +1,81 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+}
+
+h1 {
+  margin: 0;
+  padding: 20px;
+  font-size: 2.5rem;
+}
+
+.search-box {
+  margin: 30px auto;
+}
+
+input {
+  padding: 12px 20px;
+  width: 250px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  outline: none;
+  margin-right: 10px;
+}
+
+button {
+  padding: 12px 30px;
+  font-size: 16px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  background-color: #ff5252;
+}
+
+.error {
+  color: #ffeb3b;
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
+.weather-info {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 400px;
+  margin: 20px auto;
+  backdrop-filter: blur(10px);
+}
+
+.temperature {
+  font-size: 4rem;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.weather-description {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 10px;
+  font-size: 1.2rem;
+  margin: 20px 0;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.details {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  font-size: 0.9rem;
 }
