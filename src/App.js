@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './App.css';
 import Footer from './components/Footer';
@@ -13,68 +13,11 @@ function App() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
-  const [locationLoaded, setLocationLoaded] = useState(false); // Nuevo: para saber si ya intentó geolocalizar
 
   const API_KEY = '91ca0e29e5a576e51887bc6e349bbd9d';
 
-  // Cargar favoritos al iniciar
-  useEffect(() => {
-    const savedFavorites = localStorage.getItem('favoriteCities');
-    if (savedFavorites) {
-      setFavorites(JSON.parse(savedFavorites));
-    }
-  }, []);
-
-  // Guardar favoritos cuando cambien
-  useEffect(() => {
-    localStorage.setItem('favoriteCities', JSON.stringify(favorites));
-  }, [favorites]);
-
-  // 🆕 NUEVO: Obtener ubicación automática al cargar la página
-  useEffect(() => {
-    const getLocationOnLoad = () => {
-      if (navigator.geolocation) {
-        setLoading(true);
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords;
-            try {
-              const response = await axios.get(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric&lang=es`
-              );
-              setWeather(response.data);
-              setCity(response.data.name);
-              setError('');
-            } catch (err) {
-              setError('No se pudo obtener el clima de tu ubicación');
-              // Si falla la geolocalización, mostramos una ciudad por defecto
-              fetchWeather('Madrid');
-            } finally {
-              setLoading(false);
-              setLocationLoaded(true);
-            }
-          },
-          (error) => {
-            // Si el usuario niega el permiso, mostramos una ciudad por defecto
-            console.log('Error de geolocalización:', error);
-            setError('No pudimos obtener tu ubicación. Busca una ciudad manualmente.');
-            setLoading(false);
-            setLocationLoaded(true);
-            // Ciudad por defecto
-            fetchWeather('Madrid');
-          }
-        );
-      } else {
-        setError('Tu navegador no soporta geolocalización');
-        setLocationLoaded(true);
-        fetchWeather('Madrid');
-      }
-    };
-
-    getLocationOnLoad();
-  }, []); // Solo se ejecuta UNA vez al cargar la página
-
-  const fetchWeather = async (cityName = city) => {
+  // Definir fetchWeather con useCallback para poder usarlo en useEffect
+  const fetchWeather = useCallback(async (cityName = city) => {
     if (!cityName) return;
     
     setLoading(true);
@@ -92,7 +35,58 @@ function App() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [city, API_KEY]);
+
+  // Cargar favoritos al iniciar
+  useEffect(() => {
+    const savedFavorites = localStorage.getItem('favoriteCities');
+    if (savedFavorites) {
+      setFavorites(JSON.parse(savedFavorites));
+    }
+  }, []);
+
+  // Guardar favoritos cuando cambien
+  useEffect(() => {
+    localStorage.setItem('favoriteCities', JSON.stringify(favorites));
+  }, [favorites]);
+
+  // Obtener ubicación automática al cargar la página
+  useEffect(() => {
+    const getLocationOnLoad = () => {
+      if (navigator.geolocation) {
+        setLoading(true);
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            try {
+              const response = await axios.get(
+                `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric&lang=es`
+              );
+              setWeather(response.data);
+              setCity(response.data.name);
+              setError('');
+            } catch (err) {
+              setError('No se pudo obtener el clima de tu ubicación');
+              fetchWeather('Madrid');
+            } finally {
+              setLoading(false);
+            }
+          },
+          (error) => {
+            console.log('Error de geolocalización:', error);
+            setError('No pudimos obtener tu ubicación. Busca una ciudad manualmente.');
+            setLoading(false);
+            fetchWeather('Madrid');
+          }
+        );
+      } else {
+        setError('Tu navegador no soporta geolocalización');
+        fetchWeather('Madrid');
+      }
+    };
+
+    getLocationOnLoad();
+  }, [fetchWeather, API_KEY]); // Agregamos las dependencias correctas
 
   const addFavorite = (cityName) => {
     if (!favorites.includes(cityName)) {
