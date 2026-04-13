@@ -1,3 +1,77 @@
+/* Autocompletado */
+.search-input-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 250px;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.suggestions-list li {
+  padding: 10px 15px;
+  cursor: pointer;
+  color: #333;
+  transition: background 0.2s;
+  border-bottom: 1px solid #eee;
+}
+
+.suggestions-list li:hover {
+  background: #f0f0f0;
+}
+
+.suggestions-list li:last-child {
+  border-bottom: none;
+}
+
+/* Animación de entrada */
+.weather-info {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover en botones */
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Efecto glassmorphism moderno */
+.weather-info {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .App {
   text-align: center;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -78,4 +152,130 @@ button:hover {
   justify-content: space-around;
   margin-top: 20px;
   font-size: 0.9rem;
+}
+
+/* Favoritos */
+.favorites-section {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 15px;
+  margin: 20px auto;
+  max-width: 400px;
+  backdrop-filter: blur(5px);
+}
+
+.favorites-section h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+}
+
+.favorites-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.favorite-item {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 5px 10px 5px 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.favorite-city-name {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.favorite-city-name:hover {
+  transform: scale(1.05);
+  text-decoration: underline;
+}
+
+.remove-favorite {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  box-shadow: none;
+}
+
+.remove-favorite:hover {
+  transform: scale(1.1);
+  background: none;
+  box-shadow: none;
+}
+
+.no-favorites {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* Header del clima con botón de favorito */
+.weather-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.weather-header h2 {
+  margin: 0;
+}
+
+.favorite-btn {
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.favorite-btn:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.favorite-btn.active {
+  background: rgba(255, 215, 0, 0.3);
+}
+
+/* Móviles */
+@media (max-width: 600px) {
+  .App h1 {
+    font-size: 1.8rem;
+  }
+  
+  .weather-info {
+    margin: 20px 15px;
+    padding: 20px;
+  }
+  
+  .temperature {
+    font-size: 3rem;
+  }
+  
+  input {
+    width: 180px;
+  }
+}
+
+/* Tablets */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .weather-info {
+    max-width: 500px;
+  }
 }
