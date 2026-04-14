@@ -38,17 +38,13 @@ function SearchBox({ city, setCity, onSearch }) {
   }, []);
 
   return (
-    <div className="search-box" ref={wrapperRef}>
-      <div className="search-input-container">
-        <input type="text" placeholder={t('app.search.placeholder')} value={city} onChange={handleInputChange} onKeyPress={(e) => e.key === 'Enter' && onSearch()} onFocus={() => city.length > 1 && setShowSuggestions(true)} />
-        <button onClick={onSearch}>{t('app.search.button')}</button>
-      </div>
-      {showSuggestions && suggestions.length > 0 && (
-        <div className="suggestions-dropdown">
-          {suggestions.map((suggestion, index) => (<div key={index} className="suggestion-item" onClick={() => selectSuggestion(suggestion)}><span className="suggestion-icon">🔍</span><span className="suggestion-text">{suggestion}</span></div>))}
-        </div>
-      )}
-    </div>
+  <div>
+    <h1>{t('app.title')}</h1>
+    <Favorites favorites={favorites} onSelectCity={selectFavoriteCity} onRemoveFavorite={addFavorite} />
+    {loading && <LoadingSpinner />}
+    {error && <p className="error">{error}</p>}
+    {weather && <WeatherCard weather={weather} convertTemp={convertTemp} getTempSymbol={getTempSymbol} onAddFavorite={addFavorite} isFavorite={isFavorite(weather.name)} />}
+  </div>
   );
 }
 

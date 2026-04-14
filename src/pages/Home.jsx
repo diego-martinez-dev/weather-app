@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSettings } from '../contexts/SettingsContext';
-import SearchBox from '../components/SearchBox';
 import WeatherCard from '../components/WeatherCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Favorites from '../components/Favorites';
@@ -91,22 +90,40 @@ function Home() {
     }
   }, [fetchWeatherByCoords, fetchWeatherByCity, t, cityFromUrl]);
 
-  const handleSearch = (searchCity) => fetchWeatherByCity(searchCity || city);
   const addFavorite = (cityName) => {
-    if (!favorites.includes(cityName)) setFavorites([...favorites, cityName]);
-    else setFavorites(favorites.filter(fav => fav !== cityName));
+    if (!favorites.includes(cityName)) {
+      setFavorites([...favorites, cityName]);
+    } else {
+      setFavorites(favorites.filter(fav => fav !== cityName));
+    }
   };
-  const selectFavoriteCity = (cityName) => { setCity(cityName); fetchWeatherByCity(cityName); };
+
+  const selectFavoriteCity = (cityName) => {
+    setCity(cityName);
+    fetchWeatherByCity(cityName);
+  };
+
   const isFavorite = (cityName) => favorites.includes(cityName);
 
   return (
     <div>
       <h1>{t('app.title')}</h1>
-      <SearchBox city={city} setCity={setCity} onSearch={() => handleSearch()} />
-      <Favorites favorites={favorites} onSelectCity={selectFavoriteCity} onRemoveFavorite={addFavorite} />
+      <Favorites 
+        favorites={favorites} 
+        onSelectCity={selectFavoriteCity} 
+        onRemoveFavorite={addFavorite} 
+      />
       {loading && <LoadingSpinner />}
       {error && <p className="error">{error}</p>}
-      {weather && <WeatherCard weather={weather} convertTemp={convertTemp} getTempSymbol={getTempSymbol} onAddFavorite={addFavorite} isFavorite={isFavorite(weather.name)} />}
+      {weather && (
+        <WeatherCard 
+          weather={weather} 
+          convertTemp={convertTemp} 
+          getTempSymbol={getTempSymbol} 
+          onAddFavorite={addFavorite} 
+          isFavorite={isFavorite(weather.name)} 
+        />
+      )}
     </div>
   );
 }
