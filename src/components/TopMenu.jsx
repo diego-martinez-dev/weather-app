@@ -3,15 +3,13 @@ import { useSettings } from '../contexts/SettingsContext';
 import './TopMenu.css';
 
 function TopMenu() {
-  const { unit, setUnit, language, setLanguage, country, setCountry, getTempSymbol } = useSettings();
+  const { unit, setUnit, language, setLanguage, country, getTempSymbol } = useSettings();
   
   const [showUnitDropdown, setShowUnitDropdown] = useState(false);
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
-  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   
   const unitRef = useRef(null);
   const languageRef = useRef(null);
-  const countryRef = useRef(null);
 
   // Cerrar dropdowns al hacer clic fuera
   useEffect(() => {
@@ -22,15 +20,12 @@ function TopMenu() {
       if (languageRef.current && !languageRef.current.contains(event.target)) {
         setShowLanguageDropdown(false);
       }
-      if (countryRef.current && !countryRef.current.contains(event.target)) {
-        setShowCountryDropdown(false);
-      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Países y sus códigos
+  // Países y sus códigos (solo para mostrar la bandera)
   const countries = [
     { code: 'ES', name: 'España', flag: '🇪🇸' },
     { code: 'MX', name: 'México', flag: '🇲🇽' },
@@ -44,15 +39,6 @@ function TopMenu() {
     { code: 'DE', name: 'Alemania', flag: '🇩🇪' },
     { code: 'IT', name: 'Italia', flag: '🇮🇹' },
     { code: 'BR', name: 'Brasil', flag: '🇧🇷' },
-    { code: 'VE', name: 'Venezuela', flag: '🇻🇪' },
-    { code: 'EC', name: 'Ecuador', flag: '🇪🇨' },
-    { code: 'BO', name: 'Bolivia', flag: '🇧🇴' },
-    { code: 'PY', name: 'Paraguay', flag: '🇵🇾' },
-    { code: 'UY', name: 'Uruguay', flag: '🇺🇾' },
-    { code: 'CR', name: 'Costa Rica', flag: '🇨🇷' },
-    { code: 'PA', name: 'Panamá', flag: '🇵🇦' },
-    { code: 'DO', name: 'República Dominicana', flag: '🇩🇴' },
-    { code: 'PR', name: 'Puerto Rico', flag: '🇵🇷' },
   ];
 
   // Idiomas disponibles
@@ -80,11 +66,6 @@ function TopMenu() {
     return found ? found.name : 'Español';
   };
 
-  // Forzar re-render cuando cambia el país
-  useEffect(() => {
-    console.log('País actualizado en menú:', country);
-  }, [country]);
-
   return (
     <div className="top-menu">
       <div className="top-menu-container">
@@ -95,30 +76,11 @@ function TopMenu() {
 
         {/* Sección derecha */}
         <div className="menu-right">
-          {/* Selector de País - Ahora con dropdown */}
-          <div className="menu-item dropdown" ref={countryRef}>
-            <span 
-              className="dropdown-trigger"
-              onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-            >
-              {getCountryFlag()} {country} ▼
+          {/* País - Ahora fijo, sin dropdown */}
+          <div className="menu-item">
+            <span className="country-code">
+              {getCountryFlag()} {country}
             </span>
-            {showCountryDropdown && (
-              <div className="dropdown-menu country-dropdown">
-                {countries.map((c) => (
-                  <div 
-                    key={c.code}
-                    className={`dropdown-item ${country === c.code ? 'active' : ''}`}
-                    onClick={() => {
-                      setCountry(c.code);
-                      setShowCountryDropdown(false);
-                    }}
-                  >
-                    {c.flag} {c.code} - {c.name}
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Selector de Temperatura */}
