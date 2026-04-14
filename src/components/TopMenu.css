@@ -88,6 +88,30 @@
   color: #007bff;
 }
 
+
+/* Scroll para el dropdown de países */
+.country-dropdown {
+  min-width: 220px;
+  max-height: 300px;
+  overflow-y: auto;
+  right: 0;
+  left: auto;
+}
+
+.country-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.country-dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.country-dropdown::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .top-menu {

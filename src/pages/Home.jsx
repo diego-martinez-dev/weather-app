@@ -6,15 +6,14 @@ import WeatherCard from '../components/WeatherCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Favorites from '../components/Favorites';
 
-
 function Home() {
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
-  const { convertTemp, getTempSymbol } = useSettings();
-
+  
+  const { convertTemp, getTempSymbol, detectCountryFromCoords } = useSettings();
   const API_KEY = '91ca0e29e5a576e51887bc6e349bbd9d';
 
   const fetchWeatherByCity = useCallback(async (cityName) => {
@@ -42,6 +41,9 @@ function Home() {
     setError('');
     
     try {
+      // Detectar país desde coordenadas
+      await detectCountryFromCoords(lat, lon);
+      
       const weatherResponse = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=es`
       );
@@ -64,7 +66,7 @@ function Home() {
     } finally {
       setLoading(false);
     }
-  }, [API_KEY]);
+  }, [API_KEY, detectCountryFromCoords]);
 
   useEffect(() => {
     const savedFavorites = localStorage.getItem('favoriteCities');

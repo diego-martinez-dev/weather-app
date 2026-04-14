@@ -17,7 +17,7 @@ export function SettingsProvider({ children }) {
   });
   
   const [country, setCountry] = useState(() => {
-    return localStorage.getItem('country') || 'ES';
+    return localStorage.getItem('country') || 'ES'; // Valor por defecto
   });
 
   // Guardar cuando cambien
@@ -46,6 +46,24 @@ export function SettingsProvider({ children }) {
     return unit === 'celsius' ? '°C' : '°F';
   };
 
+  // Detectar país desde coordenadas
+  const detectCountryFromCoords = async (lat, lon) => {
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=90bf728b241468d111bced5d64a44730`
+      );
+      const data = await response.json();
+      if (data && data[0] && data[0].country) {
+        const detectedCountry = data[0].country;
+        setCountry(detectedCountry);
+        return detectedCountry;
+      }
+    } catch (error) {
+      console.error('Error detectando país:', error);
+    }
+    return null;
+  };
+
   const value = {
     unit,
     setUnit,
@@ -54,7 +72,8 @@ export function SettingsProvider({ children }) {
     country,
     setCountry,
     convertTemp,
-    getTempSymbol
+    getTempSymbol,
+    detectCountryFromCoords
   };
 
   return (
