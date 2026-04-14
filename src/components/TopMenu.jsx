@@ -3,7 +3,7 @@ import { useSettings } from '../contexts/SettingsContext';
 import './TopMenu.css';
 
 function TopMenu() {
-  const { unit, setUnit, language, setLanguage, country, setCountry, getTempSymbol } = useSettings();
+  const { unit, setUnit, language, setLanguage, country, getTempSymbol } = useSettings();
   
   const [showUnitDropdown, setShowUnitDropdown] = useState(false);
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
@@ -44,7 +44,7 @@ function TopMenu() {
   // Idiomas disponibles
   const languages = [
     { code: 'es', name: 'Español', flag: '🇪🇸' },
-    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'en', name: 'English', flag: '🇬🇧' },
     { code: 'fr', name: 'Français', flag: '🇫🇷' },
     { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
     { code: 'it', name: 'Italiano', flag: '🇮🇹' },
