@@ -1,0 +1,35 @@
+{
+  "app": {
+    "title": "Application Météo",
+    "search": {
+      "placeholder": "Ex: Paris, Londres, Tokyo...",
+      "button": "Rechercher",
+      "error": "Ville non trouvée. Vérifiez le nom.",
+      "location_error": "Impossible d'obtenir votre position. Recherchez manuellement.",
+      "geolocation_error": "Votre navigateur ne supporte pas la géolocalisation"
+    },
+    "weather": {
+      "feels_like": "Ressenti",
+      "humidity": "Humidité",
+      "wind": "Vent",
+      "loading": "Chargement..."
+    },
+    "favorites": {
+      "title": "⭐ Villes favorites",
+      "empty": "Vous n'avez pas encore de villes favorites. Cliquez sur ⭐ pour ajouter.",
+      "remove": "Retirer des favoris",
+      "add": "Ajouter aux favoris"
+    },
+    "footer": {
+      "terms": "Conditions d'utilisation",
+      "privacy": "Politique de confidentialité",
+      "cookies": "Politique de cookies",
+      "data_sources": "Sources de données",
+      "copyright": "Données météo © OpenWeather | © 2026 WeatherApp - Votre météo en temps réel"
+    },
+    "menu": {
+      "celsius": "Celsius",
+      "fahrenheit": "Fahrenheit"
+    }
+  }
+}

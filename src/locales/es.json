@@ -1,0 +1,56 @@
+{
+  "app": {
+    "title": "Aplicación del Clima",
+    "search": {
+      "placeholder": "Ej: Madrid, London, Tokyo...",
+      "button": "Buscar",
+      "error": "Ciudad no encontrada. Verifica el nombre.",
+      "location_error": "No pudimos obtener tu ubicación. Busca una ciudad manualmente.",
+      "geolocation_error": "Tu navegador no soporta geolocalización"
+    },
+    "weather": {
+      "feels_like": "Sensación",
+      "humidity": "Humedad",
+      "wind": "Viento",
+      "loading": "Cargando..."
+    },
+    "favorites": {
+      "title": "⭐ Ciudades favoritas",
+      "empty": "No tienes ciudades favoritas aún. Haz clic en ⭐ para agregar.",
+      "remove": "Eliminar de favoritos",
+      "add": "Agregar a favoritos"
+    },
+    "footer": {
+      "terms": "Términos de uso",
+      "privacy": "Política de privacidad",
+      "cookies": "Política de cookies",
+      "data_sources": "Fuentes de datos",
+      "copyright": "Weather data © OpenWeather | © 2026 WeatherApp - Tu clima en tiempo real"
+    },
+    "menu": {
+      "celsius": "Celsius",
+      "fahrenheit": "Fahrenheit"
+    }
+  },
+  "legal": {
+    "terms": {
+      "title": "Términos de Uso",
+      "last_update": "Última actualización: 13 de abril de 2026",
+      "acceptance": "Aceptación de los Términos",
+      "acceptance_text": "Al acceder y utilizar esta aplicación del clima, aceptas cumplir con estos Términos de Uso. Si no estás de acuerdo con alguna parte de estos términos, no debes utilizar nuestra aplicación.",
+      "use_title": "Uso de la Aplicación",
+      "use_text": "Nuestra aplicación proporciona información meteorológica en tiempo real. Te comprometes a:",
+      "use_item1": "Usar la aplicación solo para fines legales",
+      "use_item2": "No sobrecargar nuestros servidores con solicitudes excesivas",
+      "use_item3": "No intentar acceder a áreas restringidas de la aplicación",
+      "accuracy_title": "Precisión de la Información",
+      "accuracy_text": "La información meteorológica es proporcionada por OpenWeatherMap. Si bien nos esforzamos por ofrecer datos precisos, no garantizamos la exactitud, integridad o actualidad de la información.",
+      "liability_title": "Limitación de Responsabilidad",
+      "liability_text": "No somos responsables por daños directos, indirectos, incidentales o consecuentes que puedan resultar del uso o la imposibilidad de usar nuestra aplicación.",
+      "modifications_title": "Modificaciones",
+      "modifications_text": "Nos reservamos el derecho de modificar estos términos en cualquier momento.",
+      "contact_title": "Contacto",
+      "contact_text": "Si tienes preguntas sobre estos términos, contáctanos a través de nuestro formulario de contacto."
+    }
+  }
+}

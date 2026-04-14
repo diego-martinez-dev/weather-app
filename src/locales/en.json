@@ -1,0 +1,56 @@
+{
+  "app": {
+    "title": "Weather App",
+    "search": {
+      "placeholder": "Ex: Madrid, London, Tokyo...",
+      "button": "Search",
+      "error": "City not found. Check the name.",
+      "location_error": "Could not get your location. Search manually.",
+      "geolocation_error": "Your browser does not support geolocation"
+    },
+    "weather": {
+      "feels_like": "Feels like",
+      "humidity": "Humidity",
+      "wind": "Wind",
+      "loading": "Loading..."
+    },
+    "favorites": {
+      "title": "⭐ Favorite cities",
+      "empty": "You have no favorite cities yet. Click ⭐ to add.",
+      "remove": "Remove from favorites",
+      "add": "Add to favorites"
+    },
+    "footer": {
+      "terms": "Terms of use",
+      "privacy": "Privacy policy",
+      "cookies": "Cookie policy",
+      "data_sources": "Data sources",
+      "copyright": "Weather data © OpenWeather | © 2026 WeatherApp - Your real-time weather"
+    },
+    "menu": {
+      "celsius": "Celsius",
+      "fahrenheit": "Fahrenheit"
+    }
+  },
+  "legal": {
+    "terms": {
+      "title": "Terms of Use",
+      "last_update": "Last updated: April 13, 2026",
+      "acceptance": "Acceptance of Terms",
+      "acceptance_text": "By accessing and using this weather application, you agree to comply with these Terms of Use.",
+      "use_title": "Use of the Application",
+      "use_text": "Our application provides real-time weather information. You agree to:",
+      "use_item1": "Use the application only for legal purposes",
+      "use_item2": "Do not overload our servers with excessive requests",
+      "use_item3": "Do not attempt to access restricted areas of the application",
+      "accuracy_title": "Accuracy of Information",
+      "accuracy_text": "Weather information is provided by OpenWeatherMap. While we strive to provide accurate data, we do not guarantee accuracy, completeness or timeliness.",
+      "liability_title": "Limitation of Liability",
+      "liability_text": "We are not responsible for direct, indirect, incidental or consequential damages resulting from the use of our application.",
+      "modifications_title": "Modifications",
+      "modifications_text": "We reserve the right to modify these terms at any time.",
+      "contact_title": "Contact",
+      "contact_text": "If you have questions about these terms, contact us through our contact form."
+    }
+  }
+}

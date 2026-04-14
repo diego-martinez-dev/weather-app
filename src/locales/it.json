@@ -1,0 +1,35 @@
+{
+  "app": {
+    "title": "App Meteo",
+    "search": {
+      "placeholder": "Es: Roma, Londra, Tokyo...",
+      "button": "Cerca",
+      "error": "Città non trovata. Verifica il nome.",
+      "location_error": "Impossibile ottenere la tua posizione. Cerca manualmente.",
+      "geolocation_error": "Il tuo browser non supporta la geolocalizzazione"
+    },
+    "weather": {
+      "feels_like": "Percepita",
+      "humidity": "Umidità",
+      "wind": "Vento",
+      "loading": "Caricamento..."
+    },
+    "favorites": {
+      "title": "⭐ Città preferite",
+      "empty": "Non hai ancora città preferite. Clicca su ⭐ per aggiungere.",
+      "remove": "Rimuovi dai preferiti",
+      "add": "Aggiungi ai preferiti"
+    },
+    "footer": {
+      "terms": "Termini di utilizzo",
+      "privacy": "Informativa sulla privacy",
+      "cookies": "Informativa sui cookie",
+      "data_sources": "Fonti dei dati",
+      "copyright": "Dati meteo © OpenWeather | © 2026 WeatherApp - Il tuo meteo in tempo reale"
+    },
+    "menu": {
+      "celsius": "Celsius",
+      "fahrenheit": "Fahrenheit"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "app": {
+    "title": "Wetter App",
+    "search": {
+      "placeholder": "Z.B.: Berlin, London, Tokyo...",
+      "button": "Suchen",
+      "error": "Stadt nicht gefunden. Überprüfen Sie den Namen.",
+      "location_error": "Standort konnte nicht ermittelt werden. Manuell suchen.",
+      "geolocation_error": "Ihr Browser unterstützt keine Geolokalisierung"
+    },
+    "weather": {
+      "feels_like": "Gefühlt wie",
+      "humidity": "Luftfeuchtigkeit",
+      "wind": "Wind",
+      "loading": "Laden..."
+    },
+    "favorites": {
+      "title": "⭐ Lieblingsstädte",
+      "empty": "Sie haben noch keine Lieblingsstädte. Klicken Sie auf ⭐ um hinzuzufügen.",
+      "remove": "Aus Favoriten entfernen",
+      "add": "Zu Favoriten hinzufügen"
+    },
+    "footer": {
+      "terms": "Nutzungsbedingungen",
+      "privacy": "Datenschutzrichtlinie",
+      "cookies": "Cookie-Richtlinie",
+      "data_sources": "Datenquellen",
+      "copyright": "Wetterdaten © OpenWeather | © 2026 WeatherApp - Ihr Wetter in Echtzeit"
+    },
+    "menu": {
+      "celsius": "Celsius",
+      "fahrenheit": "Fahrenheit"
+    }
+  }
+}

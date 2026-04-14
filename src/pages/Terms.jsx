@@ -1,46 +1,43 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import './LegalPages.css';
 
 function Terms() {
+  const { t } = useTranslation();
+
   return (
     <div className="legal-page">
       <div className="legal-container">
-        <h1>Términos de Uso</h1>
-        <p className="last-updated">Última actualización: 13 de abril de 2026</p>
-
+        <h1>{t('legal.terms.title')}</h1>
+        <p className="last-updated">{t('legal.terms.last_update')}</p>
         <section>
-          <h2>1. Aceptación de los Términos</h2>
-          <p>Al acceder y utilizar esta aplicación del clima, aceptas cumplir con estos Términos de Uso. Si no estás de acuerdo con alguna parte de estos términos, no debes utilizar nuestra aplicación.</p>
+          <h2>{t('legal.terms.acceptance')}</h2>
+          <p>{t('legal.terms.acceptance_text')}</p>
         </section>
-
         <section>
-          <h2>2. Uso de la Aplicación</h2>
-          <p>Nuestra aplicación proporciona información meteorológica en tiempo real. Te comprometes a:</p>
+          <h2>{t('legal.terms.use_title')}</h2>
+          <p>{t('legal.terms.use_text')}</p>
           <ul>
-            <li>Usar la aplicación solo para fines legales</li>
-            <li>No sobrecargar nuestros servidores con solicitudes excesivas</li>
-            <li>No intentar acceder a áreas restringidas de la aplicación</li>
+            <li>{t('legal.terms.use_item1')}</li>
+            <li>{t('legal.terms.use_item2')}</li>
+            <li>{t('legal.terms.use_item3')}</li>
           </ul>
         </section>
-
         <section>
-          <h2>3. Precisión de la Información</h2>
-          <p>La información meteorológica es proporcionada por OpenWeatherMap. Si bien nos esforzamos por ofrecer datos precisos, no garantizamos la exactitud, integridad o actualidad de la información. El clima puede cambiar rápidamente y los datos pueden tener retrasos.</p>
+          <h2>{t('legal.terms.accuracy_title')}</h2>
+          <p>{t('legal.terms.accuracy_text')}</p>
         </section>
-
         <section>
-          <h2>4. Limitación de Responsabilidad</h2>
-          <p>No somos responsables por daños directos, indirectos, incidentales o consecuentes que puedan resultar del uso o la imposibilidad de usar nuestra aplicación, incluyendo decisiones basadas en la información meteorológica proporcionada.</p>
+          <h2>{t('legal.terms.liability_title')}</h2>
+          <p>{t('legal.terms.liability_text')}</p>
         </section>
-
         <section>
-          <h2>5. Modificaciones</h2>
-          <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios entrarán en vigor inmediatamente después de su publicación en esta página.</p>
+          <h2>{t('legal.terms.modifications_title')}</h2>
+          <p>{t('legal.terms.modifications_text')}</p>
         </section>
-
         <section>
-          <h2>6. Contacto</h2>
-          <p>Si tienes preguntas sobre estos términos, contáctanos a través de nuestro formulario de contacto.</p>
+          <h2>{t('legal.terms.contact_title')}</h2>
+          <p>{t('legal.terms.contact_text')}</p>
         </section>
       </div>
     </div>

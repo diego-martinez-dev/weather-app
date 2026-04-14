@@ -1,0 +1,35 @@
+{
+  "app": {
+    "title": "Aplicativo do Clima",
+    "search": {
+      "placeholder": "Ex: Lisboa, Londres, Tóquio...",
+      "button": "Buscar",
+      "error": "Cidade não encontrada. Verifique o nome.",
+      "location_error": "Não foi possível obter sua localização. Busque manualmente.",
+      "geolocation_error": "Seu navegador não suporta geolocalização"
+    },
+    "weather": {
+      "feels_like": "Sensação",
+      "humidity": "Umidade",
+      "wind": "Vento",
+      "loading": "Carregando..."
+    },
+    "favorites": {
+      "title": "⭐ Cidades favoritas",
+      "empty": "Você ainda não tem cidades favoritas. Clique em ⭐ para adicionar.",
+      "remove": "Remover dos favoritos",
+      "add": "Adicionar aos favoritos"
+    },
+    "footer": {
+      "terms": "Termos de uso",
+      "privacy": "Política de privacidade",
+      "cookies": "Política de cookies",
+      "data_sources": "Fontes de dados",
+      "copyright": "Dados meteorológicos © OpenWeather | © 2026 WeatherApp - Seu clima em tempo real"
+    },
+    "menu": {
+      "celsius": "Celsius",
+      "fahrenheit": "Fahrenheit"
+    }
+  }
+}
