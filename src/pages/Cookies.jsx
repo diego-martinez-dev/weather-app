@@ -1,54 +1,57 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import './LegalPages.css';
 
 function Cookies() {
+  const { t } = useTranslation();
+
   return (
     <div className="legal-page">
       <div className="legal-container">
-        <h1>Política de Cookies</h1>
-        <p className="last-updated">Última actualización: 13 de abril de 2026</p>
+        <h1>{t('legal.cookies.title')}</h1>
+        <p className="last-updated">{t('legal.cookies.last_update')}</p>
 
         <section>
-          <h2>1. ¿Qué son las Cookies?</h2>
-          <p>Las cookies son pequeños archivos de texto que los sitios web almacenan en tu navegador para recordar información sobre tus preferencias y actividades.</p>
+          <h2>{t('legal.cookies.what_title')}</h2>
+          <p>{t('legal.cookies.what_text')}</p>
         </section>
 
         <section>
-          <h2>2. Cookies que Utilizamos</h2>
-          <p>Nuestra aplicación utiliza los siguientes tipos de cookies:</p>
+          <h2>{t('legal.cookies.we_use_title')}</h2>
+          <p>{t('legal.cookies.we_use_text')}</p>
           
-          <h3>Cookies Técnicas (Necesarias)</h3>
+          <h3>{t('legal.cookies.technical_title')}</h3>
           <ul>
-            <li><strong>localStorage:</strong> Almacena tus ciudades favoritas localmente en tu navegador.</li>
-            <li><strong>Preferencias de ubicación:</strong> Recordamos si aceptaste compartir tu ubicación.</li>
+            <li>{t('legal.cookies.technical_item1')}</li>
+            <li>{t('legal.cookies.technical_item2')}</li>
           </ul>
           
-          <h3>Cookies de Terceros</h3>
+          <h3>{t('legal.cookies.third_party_title')}</h3>
           <ul>
-            <li><strong>Vercel Analytics:</strong> Cookies anónimas para medir el rendimiento de la aplicación.</li>
+            <li>{t('legal.cookies.third_party_item1')}</li>
           </ul>
         </section>
 
         <section>
-          <h2>3. Gestión de Cookies</h2>
-          <p>Puedes gestionar las cookies desde tu navegador:</p>
+          <h2>{t('legal.cookies.manage_title')}</h2>
+          <p>{t('legal.cookies.manage_text')}</p>
           <ul>
-            <li><strong>Chrome:</strong> Configuración → Privacidad y seguridad → Cookies y otros datos de sitios</li>
-            <li><strong>Firefox:</strong> Opciones → Privacidad y seguridad → Cookies y datos del sitio</li>
-            <li><strong>Safari:</strong> Preferencias → Privacidad → Cookies y datos de sitios web</li>
-            <li><strong>Edge:</strong> Configuración → Cookies y permisos del sitio</li>
+            <li>{t('legal.cookies.manage_item1')}</li>
+            <li>{t('legal.cookies.manage_item2')}</li>
+            <li>{t('legal.cookies.manage_item3')}</li>
+            <li>{t('legal.cookies.manage_item4')}</li>
           </ul>
-          <p>Nota: Al desactivar cookies, las ciudades favoritas no se guardarán entre sesiones.</p>
+          <p>{t('legal.cookies.manage_note')}</p>
         </section>
 
         <section>
-          <h2>4. Consentimiento</h2>
-          <p>Al utilizar nuestra aplicación, aceptas el uso de cookies según esta política. Puedes retirar tu consentimiento en cualquier momento ajustando la configuración de tu navegador.</p>
+          <h2>{t('legal.cookies.consent_title')}</h2>
+          <p>{t('legal.cookies.consent_text')}</p>
         </section>
 
         <section>
-          <h2>5. Cambios en la Política</h2>
-          <p>Actualizaremos esta política cuando sea necesario. Los cambios se publicarán en esta página con una nueva fecha de "última actualización".</p>
+          <h2>{t('legal.cookies.changes_title')}</h2>
+          <p>{t('legal.cookies.changes_text')}</p>
         </section>
       </div>
     </div>

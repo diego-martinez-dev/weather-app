@@ -1,54 +1,54 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import './LegalPages.css';
 
 function DataSources() {
+  const { t } = useTranslation();
+
   return (
     <div className="legal-page">
       <div className="legal-container">
-        <h1>Fuentes de Datos</h1>
-        <p className="last-updated">Última actualización: 13 de abril de 2026</p>
+        <h1>{t('legal.data_sources.title')}</h1>
+        <p className="last-updated">{t('legal.data_sources.last_update')}</p>
 
         <section>
-          <h2>1. Datos Meteorológicos</h2>
-          <p>Todos los datos meteorológicos son proporcionados por <strong>OpenWeatherMap</strong>, un servicio líder en información meteorológica global.</p>
-          <p>OpenWeatherMap recopila datos de:</p>
+          <h2>{t('legal.data_sources.weather_title')}</h2>
+          <p>{t('legal.data_sources.weather_text')}</p>
           <ul>
-            <li>Estaciones meteorológicas oficiales globales</li>
-            <li>Satélites meteorológicos</li>
-            <li>Radares meteorológicos</li>
-            <li>Modelos de predicción numérica del tiempo</li>
+            <li>{t('legal.data_sources.weather_item1')}</li>
+            <li>{t('legal.data_sources.weather_item2')}</li>
+            <li>{t('legal.data_sources.weather_item3')}</li>
+            <li>{t('legal.data_sources.weather_item4')}</li>
           </ul>
-          <p>Más información: <a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer">OpenWeatherMap.org</a></p>
+          <p>{t('legal.data_sources.weather_link')}</p>
         </section>
 
         <section>
-          <h2>2. Precisión y Actualización</h2>
-          <p>Los datos se actualizan regularmente según los ciclos de OpenWeatherMap. La información mostrada incluye:</p>
+          <h2>{t('legal.data_sources.accuracy_title')}</h2>
+          <p>{t('legal.data_sources.accuracy_text')}</p>
           <ul>
-            <li>Temperatura actual y sensación térmica</li>
-            <li>Humedad relativa</li>
-            <li>Velocidad y dirección del viento</li>
-            <li>Descripción de condiciones climáticas</li>
-            <li>Iconos representativos del clima</li>
+            <li>{t('legal.data_sources.accuracy_item1')}</li>
+            <li>{t('legal.data_sources.accuracy_item2')}</li>
+            <li>{t('legal.data_sources.accuracy_item3')}</li>
+            <li>{t('legal.data_sources.accuracy_item4')}</li>
           </ul>
         </section>
 
         <section>
-          <h2>3. Atribución</h2>
-          <p>Esta aplicación utiliza datos de OpenWeatherMap bajo los términos de su licencia. Se requiere atribución, la cual se encuentra visible en el pie de página de nuestra aplicación.</p>
-          <p>© 2026 OpenWeatherMap. Todos los derechos reservados.</p>
+          <h2>{t('legal.data_sources.attribution_title')}</h2>
+          <p>{t('legal.data_sources.attribution_text')}</p>
         </section>
 
         <section>
-          <h2>4. Limitaciones</h2>
-          <p>Los datos meteorológicos pueden tener retrasos o variaciones. Para decisiones críticas (viajes, eventos al aire libre, etc.), recomendamos consultar fuentes oficiales adicionales.</p>
+          <h2>{t('legal.data_sources.limitations_title')}</h2>
+          <p>{t('legal.data_sources.limitations_text')}</p>
         </section>
 
         <section>
-          <h2>5. Enlaces de Interés</h2>
+          <h2>{t('legal.data_sources.links_title')}</h2>
           <ul>
-            <li><a href="https://openweathermap.org/faq" target="_blank" rel="noopener noreferrer">Preguntas frecuentes de OpenWeatherMap</a></li>
-            <li><a href="https://openweathermap.org/api" target="_blank" rel="noopener noreferrer">Documentación de la API</a></li>
+            <li><a href="https://openweathermap.org/faq" target="_blank" rel="noopener noreferrer">{t('legal.data_sources.links_faq')}</a></li>
+            <li><a href="https://openweathermap.org/api" target="_blank" rel="noopener noreferrer">{t('legal.data_sources.links_api')}</a></li>
           </ul>
         </section>
       </div>
