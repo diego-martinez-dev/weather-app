@@ -1,4 +1,4 @@
-/* Top Menu fondo negro */
+/* Top Menu - Estilo The Weather Channel */
 .top-menu {
   background: #000000;
   padding: 0;
@@ -7,10 +7,12 @@
   z-index: 1000;
   width: 100%;
   margin: 0;
+  left: 0;
+  right: 0;
 }
 
 .top-menu-container-full {
-  max-width: 100%;
+  width: 100%;
   margin: 0;
   padding: 12px 24px;
   display: flex;
@@ -18,6 +20,19 @@
   align-items: center;
   gap: 20px;
   background: #000000;
+  box-sizing: border-box;
+}
+
+/* Eliminar cualquier margen del body que pueda estar causando espacio */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Asegurar que el contenedor principal también ocupe todo el ancho */
+#root, .App {
+  margin: 0;
+  padding: 0;
 }
 
 /* Logo */
