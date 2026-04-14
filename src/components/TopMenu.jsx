@@ -70,11 +70,6 @@ function TopMenu() {
     return found ? found.flag : '🌍';
   };
 
-  const getCountryName = () => {
-    const found = countries.find(c => c.code === country);
-    return found ? found.name : country;
-  };
-
   const getLanguageFlag = () => {
     const found = languages.find(l => l.code === language);
     return found ? found.flag : '🇪🇸';
