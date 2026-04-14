@@ -1,27 +1,86 @@
-/* Top Menu - Estilo The Weather Channel */
+/* Top Menu fondo negro */
 .top-menu {
-  background: white;
-  border-bottom: 1px solid #e0e0e0;
-  padding: 0 20px;
+  background: #000000;
+  padding: 0;
   position: sticky;
   top: 0;
   z-index: 1000;
+  width: 100%;
+  margin: 0;
 }
 
-.top-menu-container {
-  max-width: 1200px;
-  margin: 0 auto;
+.top-menu-container-full {
+  max-width: 100%;
+  margin: 0;
+  padding: 12px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
+  gap: 20px;
+  background: #000000;
 }
 
 /* Logo */
 .menu-logo {
   font-size: 1.3rem;
   font-weight: bold;
-  color: #007bff;
+  color: white;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.menu-logo:hover {
+  opacity: 0.8;
+}
+
+/* Barra de búsqueda */
+.menu-search {
+  flex: 1;
+  max-width: 400px;
+  display: flex;
+  align-items: center;
+  background: #333;
+  border-radius: 25px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.menu-search:focus-within {
+  background: #444;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.menu-search-input {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 14px;
+  background: transparent;
+  border: none;
+  color: white;
+  outline: none;
+}
+
+.menu-search-input::placeholder {
+  color: #aaa;
+}
+
+.menu-search-button {
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  transition: background 0.2s;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.menu-search-button:hover {
+  background: #444;
+  transform: none;
+  box-shadow: none;
 }
 
 /* Sección derecha */
@@ -34,13 +93,13 @@
 /* Items del menú */
 .menu-item {
   font-size: 14px;
-  color: #333;
+  color: white;
   cursor: pointer;
 }
 
 .country-code {
   font-weight: 500;
-  color: #555;
+  color: white;
 }
 
 /* Dropdown */
@@ -53,10 +112,11 @@
   padding: 5px 8px;
   border-radius: 5px;
   transition: background 0.2s;
+  color: white;
 }
 
 .dropdown-trigger:hover {
-  background: #f0f0f0;
+  background: #333;
 }
 
 .dropdown-menu {
@@ -77,6 +137,7 @@
   cursor: pointer;
   transition: background 0.2s;
   white-space: nowrap;
+  color: #333;
 }
 
 .dropdown-item:hover {
@@ -88,34 +149,41 @@
   color: #007bff;
 }
 
-
-/* Scroll para el dropdown de países */
-.country-dropdown {
-  min-width: 220px;
-  max-height: 300px;
-  overflow-y: auto;
-  right: 0;
-  left: auto;
-}
-
-.country-dropdown::-webkit-scrollbar {
-  width: 6px;
-}
-
-.country-dropdown::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 3px;
-}
-
-.country-dropdown::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 3px;
-}
-
 /* Responsive */
-@media (max-width: 600px) {
-  .top-menu {
-    padding: 0 10px;
+@media (max-width: 768px) {
+  .top-menu-container-full {
+    flex-wrap: wrap;
+    padding: 10px 16px;
+    gap: 10px;
+  }
+  
+  .menu-logo {
+    font-size: 1.1rem;
+  }
+  
+  .menu-search {
+    order: 3;
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .menu-right {
+    gap: 12px;
+  }
+  
+  .menu-item {
+    font-size: 12px;
+  }
+  
+  .dropdown-item {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .top-menu-container-full {
+    padding: 8px 12px;
   }
   
   .menu-logo {
@@ -123,11 +191,10 @@
   }
   
   .menu-right {
-    gap: 10px;
+    gap: 8px;
   }
   
-  .dropdown-item {
-    padding: 8px 12px;
-    font-size: 13px;
+  .country-code {
+    font-size: 11px;
   }
 }

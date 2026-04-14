@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSettings } from '../contexts/SettingsContext';
 import SearchBox from '../components/SearchBox';
@@ -9,6 +10,7 @@ import Favorites from '../components/Favorites';
 
 function Home() {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
   const [city, setCity] = useState('');
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState('');
@@ -17,6 +19,9 @@ function Home() {
   
   const { convertTemp, getTempSymbol } = useSettings();
   const API_KEY = '91ca0e29e5a576e51887bc6e349bbd9d';
+
+  // Verificar si hay ciudad en la URL (desde la búsqueda del header)
+  const cityFromUrl = searchParams.get('city');
 
   const fetchWeatherByCity = useCallback(async (cityName) => {
     if (!cityName) return;
@@ -51,6 +56,13 @@ function Home() {
     }
   }, [API_KEY, t]);
 
+  // Si hay ciudad en URL, buscarla al cargar
+  useEffect(() => {
+    if (cityFromUrl) {
+      fetchWeatherByCity(cityFromUrl);
+    }
+  }, [cityFromUrl, fetchWeatherByCity]);
+
   useEffect(() => {
     const savedFavorites = localStorage.getItem('favoriteCities');
     if (savedFavorites) setFavorites(JSON.parse(savedFavorites));
@@ -61,20 +73,23 @@ function Home() {
   }, [favorites]);
 
   useEffect(() => {
-    const getLocationOnLoad = () => {
-      if (navigator.geolocation) {
-        setLoading(true);
-        navigator.geolocation.getCurrentPosition(
-          (position) => fetchWeatherByCoords(position.coords.latitude, position.coords.longitude),
-          () => { setError(t('app.search.location_error')); setLoading(false); fetchWeatherByCity('Madrid'); }
-        );
-      } else {
-        setError(t('app.search.geolocation_error'));
-        fetchWeatherByCity('Madrid');
-      }
-    };
-    getLocationOnLoad();
-  }, [fetchWeatherByCoords, fetchWeatherByCity, t]);
+    // Solo obtener ubicación si no hay ciudad en URL
+    if (!cityFromUrl) {
+      const getLocationOnLoad = () => {
+        if (navigator.geolocation) {
+          setLoading(true);
+          navigator.geolocation.getCurrentPosition(
+            (position) => fetchWeatherByCoords(position.coords.latitude, position.coords.longitude),
+            () => { setError(t('app.search.location_error')); setLoading(false); fetchWeatherByCity('Madrid'); }
+          );
+        } else {
+          setError(t('app.search.geolocation_error'));
+          fetchWeatherByCity('Madrid');
+        }
+      };
+      getLocationOnLoad();
+    }
+  }, [fetchWeatherByCoords, fetchWeatherByCity, t, cityFromUrl]);
 
   const handleSearch = (searchCity) => fetchWeatherByCity(searchCity || city);
   const addFavorite = (cityName) => {
