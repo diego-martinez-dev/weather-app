@@ -1,0 +1,109 @@
+/* Top Menu - Estilo The Weather Channel */
+.top-menu {
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.top-menu-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+}
+
+/* Logo */
+.menu-logo {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* Sección derecha */
+.menu-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Items del menú */
+.menu-item {
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.country-code {
+  font-weight: 500;
+  color: #555;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-trigger {
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: 5px;
+  transition: background 0.2s;
+}
+
+.dropdown-trigger:hover {
+  background: #f0f0f0;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 5px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  min-width: 160px;
+  overflow: hidden;
+  z-index: 1001;
+}
+
+.dropdown-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.dropdown-item:hover {
+  background: #f5f5f5;
+}
+
+.dropdown-item.active {
+  background: #e3f2fd;
+  color: #007bff;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .top-menu {
+    padding: 0 10px;
+  }
+  
+  .menu-logo {
+    font-size: 1rem;
+  }
+  
+  .menu-right {
+    gap: 10px;
+  }
+  
+  .dropdown-item {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}

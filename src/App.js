@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { SettingsProvider } from './contexts/SettingsContext';
 import './App.css';
-import Navbar from './components/Navbar';
+import TopMenu from './components/TopMenu';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Terms from './pages/Terms';
@@ -11,19 +12,21 @@ import DataSources from './pages/DataSources';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/cookies" element={<Cookies />} />
-          <Route path="/data-sources" element={<DataSources />} />
-        </Routes>
-        <Footer />
-      </div>
-    </Router>
+    <SettingsProvider>
+      <Router>
+        <div className="App">
+          <TopMenu />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/cookies" element={<Cookies />} />
+            <Route path="/data-sources" element={<DataSources />} />
+          </Routes>
+          <Footer />
+        </div>
+      </Router>
+    </SettingsProvider>
   );
 }
 

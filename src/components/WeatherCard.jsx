@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function WeatherCard({ weather, onAddFavorite, isFavorite }) {
+function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFavorite }) {
   const [background, setBackground] = useState('');
 
   const getBackgroundByWeather = (weatherCondition) => {
@@ -46,7 +46,7 @@ function WeatherCard({ weather, onAddFavorite, isFavorite }) {
         </button>
       </div>
       <div className="temperature">
-        {Math.round(weather.main.temp)}°C
+        {convertTemp(weather.main.temp)}{getTempSymbol()}
       </div>
       <div className="weather-description">
         <img 
@@ -56,7 +56,7 @@ function WeatherCard({ weather, onAddFavorite, isFavorite }) {
         <p>{weather.weather[0].description}</p>
       </div>
       <div className="details">
-        <div>🌡️ Sensación: {Math.round(weather.main.feels_like)}°C</div>
+        <div>🌡️ Sensación: {convertTemp(weather.main.feels_like)}{getTempSymbol()}</div>
         <div>💧 Humedad: {weather.main.humidity}%</div>
         <div>💨 Viento: {weather.wind.speed} m/s</div>
       </div>

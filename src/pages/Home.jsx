@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import { useSettings } from '../contexts/SettingsContext';
 import SearchBox from '../components/SearchBox';
 import WeatherCard from '../components/WeatherCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Favorites from '../components/Favorites';
+
 
 function Home() {
   const [city, setCity] = useState('');
@@ -11,6 +13,7 @@ function Home() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
+  const { convertTemp, getTempSymbol } = useSettings();
 
   const API_KEY = '91ca0e29e5a576e51887bc6e349bbd9d';
 
@@ -147,7 +150,9 @@ function Home() {
 
       {weather && (
         <WeatherCard 
-          weather={weather} 
+          weather={weather}
+          convertTemp={convertTemp}
+          getTempSymbol={getTempSymbol}
           onAddFavorite={addFavorite}
           isFavorite={isFavorite(weather.name)}
         />
