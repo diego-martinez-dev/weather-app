@@ -80,6 +80,11 @@ function TopMenu() {
     return found ? found.name : 'Español';
   };
 
+  // Forzar re-render cuando cambia el país
+  useEffect(() => {
+    console.log('País actualizado en menú:', country);
+  }, [country]);
+
   return (
     <div className="top-menu">
       <div className="top-menu-container">

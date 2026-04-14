@@ -17,8 +17,10 @@ export function SettingsProvider({ children }) {
   });
   
   const [country, setCountry] = useState(() => {
-    return localStorage.getItem('country') || 'ES'; // Valor por defecto
+    return localStorage.getItem('country') || 'ES';
   });
+
+  const [locationLoaded, setLocationLoaded] = useState(false);
 
   // Guardar cuando cambien
   useEffect(() => {
@@ -32,19 +34,6 @@ export function SettingsProvider({ children }) {
   useEffect(() => {
     localStorage.setItem('country', country);
   }, [country]);
-
-  // Convertir temperatura según unidad
-  const convertTemp = (celsius) => {
-    if (unit === 'fahrenheit') {
-      return Math.round((celsius * 9/5) + 32);
-    }
-    return Math.round(celsius);
-  };
-
-  // Obtener símbolo de temperatura
-  const getTempSymbol = () => {
-    return unit === 'celsius' ? '°C' : '°F';
-  };
 
   // Detectar país desde coordenadas
   const detectCountryFromCoords = async (lat, lon) => {
@@ -64,6 +53,49 @@ export function SettingsProvider({ children }) {
     return null;
   };
 
+  // Detectar país automáticamente al iniciar (sin geolocalización, solo IP)
+  const detectCountryByIP = async () => {
+    try {
+      // Usamos una API gratuita para obtener país por IP
+      const response = await fetch('https://ipapi.co/json/');
+      const data = await response.json();
+      if (data && data.country_code) {
+        const detectedCountry = data.country_code;
+        setCountry(detectedCountry);
+        return detectedCountry;
+      }
+    } catch (error) {
+      console.error('Error detectando país por IP:', error);
+    }
+    return null;
+  };
+
+  // Al cargar la app, intentar detectar país por IP (rápido)
+  useEffect(() => {
+    const initCountry = async () => {
+      const savedCountry = localStorage.getItem('country');
+      if (!savedCountry || savedCountry === 'ES') {
+        // Si no hay país guardado o es el default, intentar detectar
+        await detectCountryByIP();
+      }
+      setLocationLoaded(true);
+    };
+    initCountry();
+  }, []);
+
+  // Convertir temperatura según unidad
+  const convertTemp = (celsius) => {
+    if (unit === 'fahrenheit') {
+      return Math.round((celsius * 9/5) + 32);
+    }
+    return Math.round(celsius);
+  };
+
+  // Obtener símbolo de temperatura
+  const getTempSymbol = () => {
+    return unit === 'celsius' ? '°C' : '°F';
+  };
+
   const value = {
     unit,
     setUnit,
@@ -73,7 +105,9 @@ export function SettingsProvider({ children }) {
     setCountry,
     convertTemp,
     getTempSymbol,
-    detectCountryFromCoords
+    detectCountryFromCoords,
+    detectCountryByIP,
+    locationLoaded
   };
 
   return (
