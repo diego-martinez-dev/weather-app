@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import TemperatureIndicator from './TemperatureIndicator';
 
 // Fix para los íconos de Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -21,7 +22,7 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
       // Inicializar mapa
       mapInstanceRef.current = L.map(mapRef.current).setView([lat, lon], 6);
       
-      // Capa base: Mapa base claro de CartoDB
+      // Capa base
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
@@ -35,22 +36,6 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
         opacity: 0.7,
         maxZoom: 18
       }).addTo(mapInstanceRef.current);
-
-      // Leyenda de temperatura (opcional)
-      const legend = L.control({ position: 'bottomright' });
-      legend.onAdd = function() {
-        const div = L.DomUtil.create('div', 'info legend');
-        div.innerHTML = `
-          <div style="background: white; padding: 8px 12px; border-radius: 8px; font-size: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-            <strong>🌡️ Temperatura</strong><br/>
-            <span style="background: #ff0000; display: inline-block; width: 20px; height: 10px; margin-right: 5px;"></span> Calor<br/>
-            <span style="background: #ffff00; display: inline-block; width: 20px; height: 10px; margin-right: 5px;"></span> Templado<br/>
-            <span style="background: #0000ff; display: inline-block; width: 20px; height: 10px; margin-right: 5px;"></span> Frío
-          </div>
-        `;
-        return div;
-      };
-      legend.addTo(mapInstanceRef.current);
 
       // Marcador de la ciudad
       const marker = L.marker([lat, lon]).addTo(mapInstanceRef.current);
@@ -73,8 +58,13 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
   }, [lat, lon, cityName, temperature, API_KEY]);
 
   return (
-    <div className="weather-map">
-      <div ref={mapRef} style={{ height: '400px', width: '100%', borderRadius: '12px' }} />
+    <div className="weather-map-container">
+      <div className="weather-map" ref={mapRef} style={{ height: '400px', width: '100%', borderRadius: '12px' }} />
+      <TemperatureIndicator 
+        temp={temperature}
+        minTemp={-45}
+        maxTemp={54}
+      />
     </div>
   );
 }

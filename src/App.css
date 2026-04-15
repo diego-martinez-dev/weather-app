@@ -322,6 +322,19 @@ h1 {
   font-style: italic;
 }
 
+/* Contenedor del mapa con indicador */
+.weather-map-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.weather-map {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .temp-marks {
@@ -525,5 +538,39 @@ footer {
   
   .favorites-section {
     margin: 15px;
+  }
+
+  /* Estilos responsivos para el indicador de temperatura */
+  .temperature-indicator {
+    margin: 15px 0;
+    padding: 10px;
+  }
+  
+  .temp-range-bar {
+    height: 20px;
+  }
+  
+  .temp-marks {
+    font-size: 7px;
+  }
+  
+  .temp-mark {
+    font-size: 7px;
+  }
+  
+  .temp-pointer-value {
+    font-size: 9px;
+    padding: 2px 5px;
+  }
+  
+  .temp-pointer-arrow {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 10px solid currentColor;
+  }
+  
+  .temp-hint {
+    font-size: 9px;
+    margin-top: 20px;
   }
 }
