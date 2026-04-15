@@ -1,7 +1,7 @@
 import React from 'react';
 import './TemperatureIndicator.css';
 
-function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54, showHint = true }) {
+function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54 }) {
   // Calcular el porcentaje de la temperatura en el rango
   const percentage = ((temp - minTemp) / (maxTemp - minTemp)) * 100;
   const clampedPercentage = Math.min(100, Math.max(0, percentage));
@@ -73,13 +73,6 @@ function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54, showHint = tr
           </span>
         </div>
       </div>
-      
-      {/* Texto de ayuda (opcional) */}
-      {showHint && (
-        <div className="temp-hint">
-          Haga clic en una temperatura para ver detalles de la ubicación
-        </div>
-      )}
     </div>
   );
 }

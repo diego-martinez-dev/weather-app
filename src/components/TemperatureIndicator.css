@@ -88,16 +88,6 @@
   backdrop-filter: blur(4px);
 }
 
-/* Texto de ayuda (opcional - si quieres mantenerlo) */
-.temp-hint {
-  text-align: center;
-  font-size: 9px;
-  opacity: 0.6;
-  margin-top: 8px;
-  font-style: italic;
-  color: rgba(255, 255, 255, 0.7);
-}
-
 /* Responsive */
 @media (max-width: 600px) {
   .temperature-indicator {
@@ -123,8 +113,4 @@
     border-top: 8px solid currentColor;
   }
   
-  .temp-hint {
-    font-size: 7px;
-    margin-top: 6px;
-  }
 }
