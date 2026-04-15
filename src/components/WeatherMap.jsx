@@ -29,13 +29,6 @@ function WeatherMap({ lat, lon, cityName, temperature }) {
         minZoom: 3
       }).addTo(mapInstanceRef.current);
 
-      // Capa de temperatura (OpenWeatherMap)
-      const tempLayer = L.tileLayer(`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=90bf728b241468d111bced5d64a44730`, {
-        attribution: '&copy; <a href="https://openweathermap.org/">OpenWeatherMap</a>',
-        opacity: 0.6,
-        maxZoom: 18
-      }).addTo(mapInstanceRef.current);
-
       // Marcador de la ciudad
       const marker = L.marker([lat, lon]).addTo(mapInstanceRef.current);
       
