@@ -8,6 +8,7 @@ import WeatherMap from '../components/WeatherMap';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Favorites from '../components/Favorites';
 import { getCoordinates } from '../services/weatherAPI';
+import { API_KEY } from '../config';
 
 function Home() {
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ function Home() {
   const [favorites, setFavorites] = useState([]);
   
   const { convertTemp, getTempSymbol } = useSettings();
-  const API_KEY = '91ca0e29e5a576e51887bc6e349bbd9d';
+  
 
   const cityFromUrl = searchParams.get('city');
 

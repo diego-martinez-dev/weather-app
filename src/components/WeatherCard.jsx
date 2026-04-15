@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getAirQuality } from '../services/weatherAPI';
 import { getWeatherBackground, getOverlayColor } from '../services/backgroundService';
 import axios from 'axios';
+import { API_KEY } from '../config';
 
 function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFavorite }) {
   const [airQuality, setAirQuality] = useState(null);
@@ -12,7 +13,7 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
   const [timezone, setTimezone] = useState(null);
   const [dayTemp, setDayTemp] = useState(null);
   const [nightTemp, setNightTemp] = useState(null);
-  const API_KEY = '90bf728b241468d111bced5d64a44730';
+ 
 
   // Obtener calidad del aire
   useEffect(() => {
