@@ -176,7 +176,7 @@ h1 {
   font-size: 0.9rem;
   background: rgba(0, 0, 0, 0.2);
   padding: 8px;
-  border-radius: 30px;
+  border-radius: 10px;
 }
 
 .weather-details-grid {
@@ -186,7 +186,7 @@ h1 {
   margin: 20px 0;
   padding: 15px;
   background: rgba(0, 0, 0, 0.2);
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .detail-item {
@@ -235,27 +235,28 @@ h1 {
    MAPA
    ============================================ */
 .weather-map-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .weather-map {
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  height: 400px;
 }
 
 /* ============================================
    INDICADOR DE TEMPERATURA
    ============================================ */
+
 .temperature-indicator {
   margin: 0;
   padding: 15px;
-  background: rgba(255, 255, 255, 0.1);
+  background: transparent;
   border-radius: 12px;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);  /* ← Opcional: sombra suave */
 }
 
 .temp-range-bar {

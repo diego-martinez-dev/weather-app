@@ -58,18 +58,30 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
   }, [lat, lon, cityName, temperature, API_KEY]);
 
   return (
-  <div className="weather-map-container">
-    <div 
-      ref={mapRef} 
-      className="weather-map"
-      style={{ height: '400px', width: '100%', borderRadius: '12px' }}
-    />
-    <TemperatureIndicator 
-      temp={temperature}
-      minTemp={-45}
-      maxTemp={54}
-    />
-  </div>
+    <div className="weather-map-container">
+      <div 
+        ref={mapRef} 
+        className="weather-map"
+        style={{ height: '450px', width: '100%', borderRadius: '12px', position: 'relative' }}
+      />
+      {/* Indicador de temperatura DENTRO del contenedor, superpuesto en la parte inferior */}
+      <div style={{ 
+        position: 'absolute', 
+        bottom: '20px', 
+        left: '20px', 
+        right: '20px',
+        zIndex: 1000,
+        backgroundColor: 'rgba(0,0,0,0.6)',
+        borderRadius: '12px',
+        backdropFilter: 'blur(10px)'
+      }}>
+        <TemperatureIndicator 
+          temp={temperature}
+          minTemp={-45}
+          maxTemp={54}
+        />
+      </div>
+    </div>
   );
 }
 
