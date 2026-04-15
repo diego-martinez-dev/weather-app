@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAirQuality } from '../services/weatherAPI';
 import { getWeatherBackground, getOverlayColor } from '../services/backgroundService';
+import axios from 'axios';
 
 function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFavorite }) {
   const [airQuality, setAirQuality] = useState(null);
@@ -9,6 +10,9 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
   const [overlayColor, setOverlayColor] = useState('');
   const [isDay, setIsDay] = useState(true);
   const [timezone, setTimezone] = useState(null);
+  const [dayTemp, setDayTemp] = useState(null);
+  const [nightTemp, setNightTemp] = useState(null);
+  const API_KEY = '90bf728b241468d111bced5d64a44730';
 
   // Obtener calidad del aire
   useEffect(() => {
@@ -25,16 +29,53 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
     }
   }, [weather]);
 
+  // Obtener pronóstico para temperatura de día/noche
+  useEffect(() => {
+    if (weather && weather.name) {
+      const fetchForecast = async () => {
+        try {
+          const response = await axios.get(
+            `https://api.openweathermap.org/data/2.5/forecast?q=${weather.name}&appid=${API_KEY}&units=metric&lang=es`
+          );
+          
+          // Filtrar temperaturas para día (12:00-15:00) y noche (00:00-03:00)
+          const forecasts = response.data.list;
+          const dayForecasts = forecasts.filter(f => {
+            const hour = new Date(f.dt * 1000).getHours();
+            return hour >= 12 && hour <= 15;
+          });
+          const nightForecasts = forecasts.filter(f => {
+            const hour = new Date(f.dt * 1000).getHours();
+            return hour >= 0 && hour <= 3;
+          });
+          
+          if (dayForecasts.length > 0) {
+            const avgDayTemp = dayForecasts.reduce((sum, f) => sum + f.main.temp, 0) / dayForecasts.length;
+            setDayTemp(Math.round(avgDayTemp));
+          }
+          
+          if (nightForecasts.length > 0) {
+            const avgNightTemp = nightForecasts.reduce((sum, f) => sum + f.main.temp, 0) / nightForecasts.length;
+            setNightTemp(Math.round(avgNightTemp));
+          }
+        } catch (error) {
+          console.error('Error fetching forecast:', error);
+          // Fallback a temp_max y temp_min
+          setDayTemp(Math.round(weather.main.temp_max));
+          setNightTemp(Math.round(weather.main.temp_min));
+        }
+      };
+      fetchForecast();
+    }
+  }, [weather, API_KEY]);
+
   // Obtener la zona horaria de la ciudad
   useEffect(() => {
     if (weather && weather.coord) {
-      // OpenWeatherMap devuelve timezone en segundos (offset de UTC)
       if (weather.timezone) {
         setTimezone(weather.timezone);
       } else {
-        // Si no viene, calcular offset aproximado
-        // Bogotá es UTC-5 = -18000 segundos
-        const estimatedOffset = -weather.coord.lon * 4 * 60; // 4 minutos por grado
+        const estimatedOffset = -weather.coord.lon * 4 * 60;
         setTimezone(Math.round(estimatedOffset));
       }
     }
@@ -72,10 +113,9 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
     }
   }, [weather, isDay]);
 
-  // Formatear hora del amanecer/atardecer usando el offset de la ciudad
+  // Formatear hora del amanecer/atardecer
   const formatSunTime = (timestamp) => {
     if (!timestamp || timezone === null) return '--:--';
-    // El timestamp de sunrise/sunset está en UTC, aplicamos el offset
     const localTime = new Date((timestamp + timezone) * 1000);
     const hours = localTime.getUTCHours().toString().padStart(2, '0');
     const minutes = localTime.getUTCMinutes().toString().padStart(2, '0');
@@ -97,6 +137,10 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
   if (!weather) return null;
 
   const airQualityInfo = airQuality ? getAirQualityMessage(airQuality.main.aqi) : null;
+  
+  // Usar temperaturas del pronóstico si están disponibles, sino fallback
+  const displayDayTemp = dayTemp !== null ? dayTemp : Math.round(weather.main.temp_max);
+  const displayNightTemp = nightTemp !== null ? nightTemp : Math.round(weather.main.temp_min);
 
   return (
     <div 
@@ -151,9 +195,10 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
           </div>
         </div>
 
+        {/* Temperaturas de día y noche corregidas */}
         <div className="temp-range">
-          <span>🌡️ Día {convertTemp(weather.main.temp_max)}{getTempSymbol()}</span>
-          <span>🌙 Noche {convertTemp(weather.main.temp_min)}{getTempSymbol()}</span>
+          <span>☀️ Día: {convertTemp(displayDayTemp)}{getTempSymbol()}</span>
+          <span>🌙 Noche: {convertTemp(displayNightTemp)}{getTempSymbol()}</span>
         </div>
 
         <div className="weather-details-grid">
