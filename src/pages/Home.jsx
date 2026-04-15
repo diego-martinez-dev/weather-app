@@ -10,14 +10,13 @@ import Favorites from '../components/Favorites';
 function Home() {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
-  const [city, setCity] = useState('');
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
   
   const { convertTemp, getTempSymbol } = useSettings();
-  const API_KEY = '91ca0e29e5a576e51887bc6e349bbd9d';
+  const API_KEY = '90bf728b241468d111bced5d64a44730';
 
   // Verificar si hay ciudad en la URL (desde la búsqueda del header)
   const cityFromUrl = searchParams.get('city');
@@ -29,7 +28,6 @@ function Home() {
     try {
       const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric&lang=es`);
       setWeather(response.data);
-      setCity(cityName);
     } catch (err) {
       setError(t('app.search.error'));
       setWeather(null);
@@ -47,7 +45,6 @@ function Home() {
       const cityName = geoResponse.data[0]?.name || weatherResponse.data.name;
       const updatedWeather = { ...weatherResponse.data, name: cityName };
       setWeather(updatedWeather);
-      setCity(cityName);
     } catch (err) {
       setError(t('app.search.location_error'));
     } finally {
@@ -99,7 +96,6 @@ function Home() {
   };
 
   const selectFavoriteCity = (cityName) => {
-    setCity(cityName);
     fetchWeatherByCity(cityName);
   };
 
