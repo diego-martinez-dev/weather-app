@@ -12,7 +12,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
+function WeatherMap({ lat, lon, cityName, temperatureCelsius, temperatureDisplay, API_KEY }) {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
 
@@ -23,7 +23,7 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
       // Inicializar mapa
       mapInstanceRef.current = L.map(mapRef.current).setView([lat, lon], 6);
       
-      // Capa base (estilo más limpio)
+      // Capa base
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
@@ -38,7 +38,7 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
         maxZoom: 18
       }).addTo(mapInstanceRef.current);
 
-      // Marcador de la ciudad (estilo mejorado)
+      // Marcador de la ciudad
       const customIcon = L.divIcon({
         className: 'custom-marker',
         html: '<div style="background: #ff4444; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.3);"></div>',
@@ -51,7 +51,7 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
       marker.bindPopup(`
         <div style="font-family: sans-serif; text-align: center;">
           <strong>${cityName}</strong><br/>
-          🌡️ ${temperature}°C
+          🌡️ ${temperatureDisplay}
         </div>
       `).openPopup();
     }
@@ -62,7 +62,7 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
         mapInstanceRef.current = null;
       }
     };
-  }, [lat, lon, cityName, temperature, API_KEY]);
+  }, [lat, lon, cityName, temperatureDisplay, API_KEY]);
 
   return (
     <div className="weather-map-container">
@@ -73,7 +73,7 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
       />
       <div className="weather-map-indicator">
         <TemperatureIndicator 
-          temp={temperature}
+          temp={temperatureCelsius}  // ← Pasamos la temperatura en °C para el cálculo
           minTemp={-45}
           maxTemp={54}
         />

@@ -142,7 +142,8 @@ function Home() {
                 lat={coordinates.lat} 
                 lon={coordinates.lon} 
                 cityName={weather.name}
-                temperature={convertTemp(weather.main.temp)}
+                temperatureCelsius={weather.main.temp}  // ← Valor original en °C para el indicador
+                temperatureDisplay={`${convertTemp(weather.main.temp)}${getTempSymbol()}`}  // ← Valor mostrado
                 API_KEY={API_KEY}
               />
             )}
