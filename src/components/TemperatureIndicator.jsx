@@ -1,12 +1,12 @@
 import React from 'react';
 import './TemperatureIndicator.css';
 
-function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54 }) {
-  // Calcular el porcentaje de la temperatura en el rango
-  const percentage = ((temp - minTemp) / (maxTemp - minTemp)) * 100;
+function TemperatureIndicator({ tempCelsius, tempDisplay, minTemp = -45, maxTemp = 54 }) {
+  // Calcular el porcentaje usando la temperatura en Celsius (para la posición)
+  const percentage = ((tempCelsius - minTemp) / (maxTemp - minTemp)) * 100;
   const clampedPercentage = Math.min(100, Math.max(0, percentage));
   
-  // Determinar el color según la temperatura
+  // Determinar el color según la temperatura (usando Celsius)
   const getColorByTemp = (temperature) => {
     if (temperature <= -29) return '#0033cc';
     if (temperature <= -12) return '#1a66ff';
@@ -17,9 +17,9 @@ function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54 }) {
     return '#ff0000';
   };
   
-  const indicatorColor = getColorByTemp(temp);
+  const indicatorColor = getColorByTemp(tempCelsius);
   
-  // Rangos de temperatura
+  // Rangos de temperatura (siempre en Celsius para la barra)
   const ranges = [
     { value: -45, label: '-45°C' },
     { value: -29, label: '-29°' },
@@ -32,7 +32,7 @@ function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54 }) {
   
   return (
     <div className="temperature-indicator">
-      {/* Puntero de temperatura actual - AHORA ARRIBA */}
+      {/* Puntero de temperatura actual */}
       <div className="temp-pointer-container">
         <div
           className="temp-pointer"
@@ -41,7 +41,7 @@ function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54 }) {
           }}
         >
           <span className="temp-pointer-value">
-            {Math.round(temp)}°C
+            {tempDisplay}  {/* ← Mostramos el valor en la unidad actual */}
           </span>
           <div 
             className="temp-pointer-arrow" 

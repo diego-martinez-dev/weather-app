@@ -12,7 +12,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-function WeatherMap({ lat, lon, cityName, temperatureCelsius, temperatureDisplay, API_KEY }) {
+function WeatherMap({ lat, lon, cityName, tempCelsius, tempDisplay, API_KEY }) {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
 
@@ -51,7 +51,7 @@ function WeatherMap({ lat, lon, cityName, temperatureCelsius, temperatureDisplay
       marker.bindPopup(`
         <div style="font-family: sans-serif; text-align: center;">
           <strong>${cityName}</strong><br/>
-          🌡️ ${temperatureDisplay}
+          🌡️ ${tempDisplay}
         </div>
       `).openPopup();
     }
@@ -62,7 +62,7 @@ function WeatherMap({ lat, lon, cityName, temperatureCelsius, temperatureDisplay
         mapInstanceRef.current = null;
       }
     };
-  }, [lat, lon, cityName, temperatureDisplay, API_KEY]);
+  }, [lat, lon, cityName, tempDisplay, API_KEY]);
 
   return (
     <div className="weather-map-container">
@@ -73,7 +73,8 @@ function WeatherMap({ lat, lon, cityName, temperatureCelsius, temperatureDisplay
       />
       <div className="weather-map-indicator">
         <TemperatureIndicator 
-          temp={temperatureCelsius}  // ← Pasamos la temperatura en °C para el cálculo
+          tempCelsius={tempCelsius}
+          tempDisplay={tempDisplay}
           minTemp={-45}
           maxTemp={54}
         />
