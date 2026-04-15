@@ -16,7 +16,7 @@ function Home() {
   const [favorites, setFavorites] = useState([]);
   
   const { convertTemp, getTempSymbol } = useSettings();
-  const API_KEY = '90bf728b241468d111bced5d64a44730';
+  const API_KEY = '91ca0e29e5a576e51887bc6e349bbd9d';
 
   // Verificar si hay ciudad en la URL (desde la búsqueda del header)
   const cityFromUrl = searchParams.get('city');
