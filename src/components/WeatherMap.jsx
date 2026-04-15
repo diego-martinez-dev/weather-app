@@ -42,10 +42,7 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
       
       marker.bindPopup(`
         <b>${cityName}</b><br/>
-        🌡️ Temperatura actual: ${temperature}°C<br/>
-        📍 Lat: ${lat.toFixed(4)}<br/>
-        📍 Lon: ${lon.toFixed(4)}<br/>
-        <i>Mapa muestra temperatura superficial</i>
+         Temperatura actual: ${temperature}°C<br/>
       `).openPopup();
     }
 
@@ -62,7 +59,7 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
       <div 
         ref={mapRef} 
         className="weather-map"
-        style={{ height: '450px', width: '100%', borderRadius: '12px', position: 'relative' }}
+        style={{ height: '500px', width: '100%', borderRadius: '12px', position: 'relative' }}
       />
       {/* Indicador de temperatura DENTRO del contenedor, superpuesto en la parte inferior */}
       <div style={{ 
@@ -71,9 +68,9 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
         left: '20px', 
         right: '20px',
         zIndex: 1000,
-        backgroundColor: 'rgba(0,0,0,0.6)',
-        borderRadius: '12px',
-        backdropFilter: 'blur(10px)'
+        backgroundColor: 'rgba(0,0,0,0.2)',
+        borderRadius: '10px',
+        backdropFilter: 'blur(5px)'
       }}>
         <TemperatureIndicator 
           temp={temperature}
