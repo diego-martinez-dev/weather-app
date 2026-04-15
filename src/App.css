@@ -232,13 +232,14 @@ h1 {
 }
 
 /* ============================================
-   MAPA
+   WEATHER MAP
    ============================================ */
 .weather-map-container {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  min-height: 500px;
 }
 
 .weather-map {
@@ -247,7 +248,7 @@ h1 {
 }
 
 /* ============================================
-   INDICADOR DE TEMPERATURA
+   INDICADOR DE TEMPERATURA DEL WEATHER MAP
    ============================================ */
 
 .temperature-indicator {
