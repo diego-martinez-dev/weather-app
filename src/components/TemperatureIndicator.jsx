@@ -32,6 +32,24 @@ function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54 }) {
   
   return (
     <div className="temperature-indicator">
+      {/* Puntero de temperatura actual - AHORA ARRIBA */}
+      <div className="temp-pointer-container">
+        <div
+          className="temp-pointer"
+          style={{
+            left: `${clampedPercentage}%`,
+          }}
+        >
+          <span className="temp-pointer-value">
+            {Math.round(temp)}°C
+          </span>
+          <div 
+            className="temp-pointer-arrow" 
+            style={{ borderTopColor: indicatorColor }}
+          />
+        </div>
+      </div>
+      
       {/* Barra de colores */}
       <div className="temp-range-bar">
         {ranges.map((range, index) => (
@@ -54,24 +72,6 @@ function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54 }) {
             {range.label}
           </span>
         ))}
-      </div>
-      
-      {/* Puntero de temperatura actual */}
-      <div className="temp-pointer-container">
-        <div
-          className="temp-pointer"
-          style={{
-            left: `${clampedPercentage}%`,
-          }}
-        >
-          <div 
-            className="temp-pointer-arrow" 
-            style={{ borderTopColor: indicatorColor }}
-          />
-          <span className="temp-pointer-value">
-            {Math.round(temp)}°C
-          </span>
-        </div>
       </div>
     </div>
   );
