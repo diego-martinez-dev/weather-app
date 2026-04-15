@@ -143,6 +143,7 @@ function Home() {
                 lon={coordinates.lon} 
                 cityName={weather.name}
                 temperature={convertTemp(weather.main.temp)}
+                API_KEY={API_KEY}
               />
             )}
           </div>
