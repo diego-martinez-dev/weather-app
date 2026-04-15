@@ -22,7 +22,7 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
       mapInstanceRef.current = L.map(mapRef.current).setView([lat, lon], 6);
       
       // Capa base: Mapa base claro de CartoDB
-      const baseLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
         maxZoom: 19,
@@ -30,7 +30,7 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
       }).addTo(mapInstanceRef.current);
       
       // Capa de temperatura de OpenWeatherMap
-      const tempLayer = L.tileLayer(`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {
+      L.tileLayer(`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {
         attribution: 'Temperature data © <a href="https://openweathermap.org/">OpenWeatherMap</a>',
         opacity: 0.7,
         maxZoom: 18
@@ -51,13 +51,6 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
         return div;
       };
       legend.addTo(mapInstanceRef.current);
-
-      // Control de capas para mostrar/ocultar temperatura
-      const overlayControl = {
-        "Capa de Temperatura": tempLayer
-      };
-      
-      L.control.layers(null, overlayControl, { collapsed: false }).addTo(mapInstanceRef.current);
 
       // Marcador de la ciudad
       const marker = L.marker([lat, lon]).addTo(mapInstanceRef.current);
