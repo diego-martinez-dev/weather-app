@@ -25,26 +25,22 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
     }
   }, [weather]);
 
+  
   // Obtener la zona horaria de la ciudad
   useEffect(() => {
     if (weather && weather.coord) {
-      // Calcular el offset de zona horaria desde el timestamp UTC
-      // OpenWeatherMap no da zona horaria directamente, pero podemos calcularla
       const calculateTimezone = () => {
-        const now = new Date();
-        const utcTimestamp = now.getTime();
-        
         // La API de OpenWeatherMap a veces devuelve timezone en segundos
         if (weather.timezone) {
           setTimezone(weather.timezone);
         } else {
-          // Fallback: usar UTC-5 como default para Colombia
-          setTimezone(-18000); // UTC-5 en segundos
-        }
-      };
-      calculateTimezone();
-    }
-  }, [weather]);
+        // Fallback: usar UTC-5 como default para Colombia
+        setTimezone(-18000); // UTC-5 en segundos
+      }
+    };
+    calculateTimezone();
+  }
+  }, [weather]);  
 
   // Actualizar hora local de la ciudad
   useEffect(() => {
