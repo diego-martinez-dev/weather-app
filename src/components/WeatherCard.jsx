@@ -25,40 +25,34 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
     }
   }, [weather]);
 
-  
   // Obtener la zona horaria de la ciudad
   useEffect(() => {
     if (weather && weather.coord) {
-      const calculateTimezone = () => {
-        // La API de OpenWeatherMap a veces devuelve timezone en segundos
-        if (weather.timezone) {
-          setTimezone(weather.timezone);
-        } else {
-        // Fallback: usar UTC-5 como default para Colombia
-        setTimezone(-18000); // UTC-5 en segundos
+      // OpenWeatherMap devuelve timezone en segundos (offset de UTC)
+      if (weather.timezone) {
+        setTimezone(weather.timezone);
+      } else {
+        // Si no viene, calcular offset aproximado
+        // Bogotá es UTC-5 = -18000 segundos
+        const estimatedOffset = -weather.coord.lon * 4 * 60; // 4 minutos por grado
+        setTimezone(Math.round(estimatedOffset));
       }
-    };
-    calculateTimezone();
-  }
-  }, [weather]);  
+    }
+  }, [weather]);
 
   // Actualizar hora local de la ciudad
   useEffect(() => {
-    if (!weather || !timezone) return;
+    if (!weather || timezone === null) return;
 
     const updateCityTime = () => {
-      // Obtener hora UTC actual
       const now = new Date();
       const utcTime = now.getTime();
-      
-      // Aplicar offset de la ciudad (timezone está en segundos)
       const cityTime = new Date(utcTime + (timezone * 1000));
       
       const hours = cityTime.getUTCHours().toString().padStart(2, '0');
       const minutes = cityTime.getUTCMinutes().toString().padStart(2, '0');
       setCurrentTime(`${hours}:${minutes}`);
       
-      // Determinar si es de día en la ciudad (6:00 - 18:00 hora local)
       const hour = cityTime.getUTCHours();
       setIsDay(hour >= 6 && hour < 18);
     };
@@ -78,6 +72,16 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
     }
   }, [weather, isDay]);
 
+  // Formatear hora del amanecer/atardecer usando el offset de la ciudad
+  const formatSunTime = (timestamp) => {
+    if (!timestamp || timezone === null) return '--:--';
+    // El timestamp de sunrise/sunset está en UTC, aplicamos el offset
+    const localTime = new Date((timestamp + timezone) * 1000);
+    const hours = localTime.getUTCHours().toString().padStart(2, '0');
+    const minutes = localTime.getUTCMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
   // Obtener mensaje de calidad del aire
   const getAirQualityMessage = (aqi) => {
     switch (aqi) {
@@ -88,15 +92,6 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
       case 5: return { text: 'Muy mala', color: '#8f3f97' };
       default: return { text: 'Desconocida', color: '#999' };
     }
-  };
-
-  // Formatear hora (timestamp Unix a hora local de la ciudad)
-  const formatTime = (timestamp) => {
-    if (!timestamp) return '--:--';
-    const date = new Date(timestamp * 1000);
-    const hours = date.getUTCHours().toString().padStart(2, '0');
-    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
   };
 
   if (!weather) return null;
@@ -113,7 +108,6 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
         position: 'relative'
       }}
     >
-      {/* Overlay semitransparente */}
       <div 
         style={{
           position: 'absolute',
@@ -127,9 +121,7 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
         }}
       />
       
-      {/* Contenido (con z-index mayor que el overlay) */}
       <div style={{ position: 'relative', zIndex: 2 }}>
-        {/* Header con ciudad y hora LOCAL de la ciudad */}
         <div className="card-header">
           <div>
             <h2 className="city-name">{weather.name}, {weather.sys.country}</h2>
@@ -148,7 +140,6 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
           </div>
         </div>
 
-        {/* Temperatura principal */}
         <div className="main-temp">
           <div className="temp-value">{convertTemp(weather.main.temp)}{getTempSymbol()}</div>
           <div className="weather-description">
@@ -160,13 +151,11 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
           </div>
         </div>
 
-        {/* Temperaturas min/max */}
         <div className="temp-range">
           <span>🌡️ Día {convertTemp(weather.main.temp_max)}{getTempSymbol()}</span>
           <span>🌙 Noche {convertTemp(weather.main.temp_min)}{getTempSymbol()}</span>
         </div>
 
-        {/* Detalles en grid */}
         <div className="weather-details-grid">
           <div className="detail-item">
             <span className="detail-icon">🌡️</span>
@@ -187,15 +176,14 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
           </div>
         </div>
 
-        {/* Amanecer / Atardecer */}
         <div className="sun-times">
           <div className="sun-item">
             <span className="sun-icon">🌅</span>
-            <span>Amanecer: {formatTime(weather.sys.sunrise)}</span>
+            <span>Amanecer: {formatSunTime(weather.sys.sunrise)}</span>
           </div>
           <div className="sun-item">
             <span className="sun-icon">🌇</span>
-            <span>Atardecer: {formatTime(weather.sys.sunset)}</span>
+            <span>Atardecer: {formatSunTime(weather.sys.sunset)}</span>
           </div>
         </div>
       </div>
