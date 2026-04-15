@@ -240,11 +240,13 @@ h1 {
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   min-height: 500px;
+  background: rgba(0, 0, 0, 0.3);  /* ← mismo tono que el overlay del card */
 }
 
 .weather-map {
   border-radius: 12px;
   overflow: hidden;
+  background: transparent;  /* ← Agregar */
 }
 
 /* ============================================
@@ -254,10 +256,10 @@ h1 {
 .temperature-indicator {
   margin: 0;
   padding: 15px;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.4);  /* ← Cambiado de transparent a negro semitransparente */
   border-radius: 12px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);  /* ← Opcional: sombra suave */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .temp-range-bar {
