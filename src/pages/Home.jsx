@@ -4,13 +4,16 @@ import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import { useSettings } from '../contexts/SettingsContext';
 import WeatherCard from '../components/WeatherCard';
+import WeatherMap from '../components/WeatherMap';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Favorites from '../components/Favorites';
+import { getCoordinates } from '../services/weatherAPI';
 
 function Home() {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const [weather, setWeather] = useState(null);
+  const [coordinates, setCoordinates] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
@@ -18,7 +21,6 @@ function Home() {
   const { convertTemp, getTempSymbol } = useSettings();
   const API_KEY = '91ca0e29e5a576e51887bc6e349bbd9d';
 
-  // Verificar si hay ciudad en la URL (desde la búsqueda del header)
   const cityFromUrl = searchParams.get('city');
 
   const fetchWeatherByCity = useCallback(async (cityName) => {
@@ -28,6 +30,12 @@ function Home() {
     try {
       const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric&lang=es`);
       setWeather(response.data);
+      
+      // Obtener coordenadas para el mapa
+      const coords = await getCoordinates(cityName);
+      if (coords) {
+        setCoordinates({ lat: coords.lat, lon: coords.lon });
+      }
     } catch (err) {
       setError(t('app.search.error'));
       setWeather(null);
@@ -45,6 +53,7 @@ function Home() {
       const cityName = geoResponse.data[0]?.name || weatherResponse.data.name;
       const updatedWeather = { ...weatherResponse.data, name: cityName };
       setWeather(updatedWeather);
+      setCoordinates({ lat, lon });
     } catch (err) {
       setError(t('app.search.location_error'));
     } finally {
@@ -52,7 +61,6 @@ function Home() {
     }
   }, [API_KEY, t]);
 
-  // Si hay ciudad en URL, buscarla al cargar
   useEffect(() => {
     if (cityFromUrl) {
       fetchWeatherByCity(cityFromUrl);
@@ -69,7 +77,6 @@ function Home() {
   }, [favorites]);
 
   useEffect(() => {
-    // Solo obtener ubicación si no hay ciudad en URL
     if (!cityFromUrl) {
       const getLocationOnLoad = () => {
         if (navigator.geolocation) {
@@ -102,23 +109,43 @@ function Home() {
   const isFavorite = (cityName) => favorites.includes(cityName);
 
   return (
-    <div>
+    <div className="home-two-columns">
       <h1>{t('app.title')}</h1>
+      
       <Favorites 
         favorites={favorites} 
         onSelectCity={selectFavoriteCity} 
         onRemoveFavorite={addFavorite} 
       />
+      
       {loading && <LoadingSpinner />}
       {error && <p className="error">{error}</p>}
+      
       {weather && (
-        <WeatherCard 
-          weather={weather} 
-          convertTemp={convertTemp} 
-          getTempSymbol={getTempSymbol} 
-          onAddFavorite={addFavorite} 
-          isFavorite={isFavorite(weather.name)} 
-        />
+        <div className="two-column-layout">
+          {/* Columna izquierda - Weather Card */}
+          <div className="left-column">
+            <WeatherCard 
+              weather={weather} 
+              convertTemp={convertTemp} 
+              getTempSymbol={getTempSymbol} 
+              onAddFavorite={addFavorite} 
+              isFavorite={isFavorite(weather.name)} 
+            />
+          </div>
+          
+          {/* Columna derecha - Mapa */}
+          <div className="right-column">
+            {coordinates && (
+              <WeatherMap 
+                lat={coordinates.lat} 
+                lon={coordinates.lon} 
+                cityName={weather.name}
+                temperature={convertTemp(weather.main.temp)}
+              />
+            )}
+          </div>
+        </div>
       )}
     </div>
   );
