@@ -33,13 +33,18 @@ h1 {
 /* ============================================
    LAYOUT DE DOS COLUMNAS
    ============================================ */
-/* Asegurar que ambas columnas tengan la misma altura */
+.home-two-columns {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 .two-column-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
   margin-top: 20px;
-  align-items: stretch;  /* ← Nuevo: estira las columnas a la misma altura */
+  align-items: stretch;
 }
 
 .left-column,
@@ -49,39 +54,17 @@ h1 {
   flex-direction: column;
 }
 
-/* El mapa debe ocupar toda la altura disponible */
-.weather-map-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  height: 100%;
-}
-
-.weather-map {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  flex: 1;
-  min-height: 400px;
-}
-
-/* Asegurar que el div del mapa ocupe todo el espacio */
-.weather-map > div {
-  height: 100%;
-  width: 100%;
-}
-
 /* ============================================
    WEATHER CARD MODERNO
    ============================================ */
-
-   .weather-card-modern {
+.weather-card-modern {
   border-radius: 20px;
   padding: 20px;
   color: white;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  min-height: 500px;
+  min-height: 550px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -91,6 +74,7 @@ h1 {
   transform: translateY(-5px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
+
 /* Asegurar que el texto sea legible */
 .weather-card-modern .card-header,
 .weather-card-modern .main-temp,
@@ -254,15 +238,32 @@ h1 {
 /* ============================================
    MAPA
    ============================================ */
+.weather-map-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: 100%;
+}
+
 .weather-map {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-height: 480px;
 }
 
-/* Indicador de temperatura */
+.weather-map > div {
+  height: 100%;
+  width: 100%;
+  min-height: 400px;
+}
+
+/* ============================================
+   INDICADOR DE TEMPERATURA
+   ============================================ */
 .temperature-indicator {
-  margin: 20px 0;
+  margin: 0;
   padding: 15px;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 12px;
@@ -340,35 +341,6 @@ h1 {
   opacity: 0.7;
   margin-top: 30px;
   font-style: italic;
-}
-
-/* Contenedor del mapa con indicador */
-.weather-map-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.weather-map {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .temp-marks {
-    font-size: 8px;
-  }
-  
-  .temp-mark {
-    font-size: 8px;
-  }
-  
-  .temp-pointer-value {
-    font-size: 10px;
-    padding: 2px 6px;
-  }
 }
 
 /* ============================================

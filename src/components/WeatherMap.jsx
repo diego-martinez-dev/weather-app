@@ -61,12 +61,8 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
   <div className="weather-map-container">
     <div 
       ref={mapRef} 
-      style={{ 
-        height: '100%', 
-        width: '100%', 
-        minHeight: '400px',
-        borderRadius: '12px' 
-      }} 
+      className="weather-map"
+      style={{ height: '100%', width: '100%' }}
     />
     <TemperatureIndicator 
       temp={temperature}
@@ -74,7 +70,7 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
       maxTemp={54}
     />
   </div>
-);
+  );
 }
 
 export default WeatherMap;
