@@ -68,7 +68,7 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
       };
       fetchForecast();
     }
-  }, [weather, API_KEY]);
+  }, [weather]);
 
   // Obtener la zona horaria de la ciudad
   useEffect(() => {

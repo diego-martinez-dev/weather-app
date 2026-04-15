@@ -43,7 +43,7 @@ function Home() {
     } finally {
       setLoading(false);
     }
-  }, [API_KEY, t]);
+  }, [t]);
 
   const fetchWeatherByCoords = useCallback(async (lat, lon) => {
     setLoading(true);
@@ -60,7 +60,7 @@ function Home() {
     } finally {
       setLoading(false);
     }
-  }, [API_KEY, t]);
+  }, [t]);
 
   useEffect(() => {
     if (cityFromUrl) {
