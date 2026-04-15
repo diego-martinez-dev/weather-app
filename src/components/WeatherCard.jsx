@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAirQuality } from '../services/weatherAPI';
 import { getWeatherBackground, getOverlayColor } from '../services/backgroundService';
+import TemperatureIndicator from './TemperatureIndicator';
 import axios from 'axios';
 import { API_KEY } from '../config';
 
@@ -184,7 +185,7 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
             </button>
           </div>
         </div>
-
+        
         <div className="main-temp">
           <div className="temp-value">{convertTemp(weather.main.temp)}{getTempSymbol()}</div>
           <div className="weather-description">
@@ -195,6 +196,14 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
             <span>{weather.weather[0].description}</span>
           </div>
         </div>
+
+        {/* Indicador de temperatura */}
+        <TemperatureIndicator 
+          temp={weather.main.temp}
+          minTemp={-45}
+          maxTemp={54}
+        />  
+
 
         {/* Temperaturas de día y noche corregidas */}
         <div className="temp-range">
