@@ -8,6 +8,7 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
   const [backgroundImage, setBackgroundImage] = useState('');
   const [overlayColor, setOverlayColor] = useState('');
   const [isDay, setIsDay] = useState(true);
+  const [timezone, setTimezone] = useState(null);
 
   // Obtener calidad del aire
   useEffect(() => {
@@ -24,29 +25,57 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
     }
   }, [weather]);
 
-  // Obtener hora actual en formato 24h
+  // Obtener la zona horaria de la ciudad
   useEffect(() => {
-    const updateTime = () => {
+    if (weather && weather.coord) {
+      // Calcular el offset de zona horaria desde el timestamp UTC
+      // OpenWeatherMap no da zona horaria directamente, pero podemos calcularla
+      const calculateTimezone = () => {
+        const now = new Date();
+        const utcTimestamp = now.getTime();
+        
+        // La API de OpenWeatherMap a veces devuelve timezone en segundos
+        if (weather.timezone) {
+          setTimezone(weather.timezone);
+        } else {
+          // Fallback: usar UTC-5 como default para Colombia
+          setTimezone(-18000); // UTC-5 en segundos
+        }
+      };
+      calculateTimezone();
+    }
+  }, [weather]);
+
+  // Actualizar hora local de la ciudad
+  useEffect(() => {
+    if (!weather || !timezone) return;
+
+    const updateCityTime = () => {
+      // Obtener hora UTC actual
       const now = new Date();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const utcTime = now.getTime();
+      
+      // Aplicar offset de la ciudad (timezone está en segundos)
+      const cityTime = new Date(utcTime + (timezone * 1000));
+      
+      const hours = cityTime.getUTCHours().toString().padStart(2, '0');
+      const minutes = cityTime.getUTCMinutes().toString().padStart(2, '0');
       setCurrentTime(`${hours}:${minutes}`);
       
-      // Determinar si es de día (6:00 - 18:00)
-      const hour = now.getHours();
+      // Determinar si es de día en la ciudad (6:00 - 18:00 hora local)
+      const hour = cityTime.getUTCHours();
       setIsDay(hour >= 6 && hour < 18);
     };
-    updateTime();
-    const interval = setInterval(updateTime, 60000);
-    return () => clearInterval(interval);
-  }, []);
 
-  // Actualizar fondo según clima y hora
+    updateCityTime();
+    const interval = setInterval(updateCityTime, 60000);
+    return () => clearInterval(interval);
+  }, [weather, timezone]);
+
+  // Actualizar fondo según clima y hora local de la ciudad
   useEffect(() => {
     if (weather && weather.weather && weather.weather[0]) {
-      const now = new Date();
-      const currentTimestamp = Math.floor(now.getTime() / 1000);
-      const imageUrl = getWeatherBackground(weather, currentTimestamp, weather.sys.sunrise, weather.sys.sunset);
+      const imageUrl = getWeatherBackground(weather, isDay);
       const overlay = getOverlayColor(isDay);
       setBackgroundImage(imageUrl);
       setOverlayColor(overlay);
@@ -65,11 +94,12 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
     }
   };
 
-  // Formatear hora (timestamp Unix a hora local)
+  // Formatear hora (timestamp Unix a hora local de la ciudad)
   const formatTime = (timestamp) => {
+    if (!timestamp) return '--:--';
     const date = new Date(timestamp * 1000);
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const hours = date.getUTCHours().toString().padStart(2, '0');
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}`;
   };
 
@@ -103,11 +133,15 @@ function WeatherCard({ weather, convertTemp, getTempSymbol, onAddFavorite, isFav
       
       {/* Contenido (con z-index mayor que el overlay) */}
       <div style={{ position: 'relative', zIndex: 2 }}>
-        {/* Header con ciudad y hora */}
+        {/* Header con ciudad y hora LOCAL de la ciudad */}
         <div className="card-header">
-          <h2 className="city-name">{weather.name}, {weather.sys.country}</h2>
+          <div>
+            <h2 className="city-name">{weather.name}, {weather.sys.country}</h2>
+            <div className="city-timezone">
+              Hora local: {currentTime || '--:--'}
+            </div>
+          </div>
           <div className="header-right">
-            <span className="current-time">{currentTime}</span>
             <button 
               onClick={() => onAddFavorite(weather.name)}
               className={`favorite-btn-modern ${isFavorite ? 'active' : ''}`}

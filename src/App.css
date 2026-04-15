@@ -106,6 +106,14 @@ h1 {
   font-weight: 600;
 }
 
+/* Estilo para la hora local */
+.city-timezone {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin-top: 5px;
+  font-weight: normal;
+}
+
 .header-right {
   display: flex;
   align-items: center;
