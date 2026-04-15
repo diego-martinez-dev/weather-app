@@ -30,6 +30,24 @@ h1 {
   color: #222;
 }
 
+/* Estilos globales para mapas y marcadores */
+.custom-marker {
+  background: transparent;
+  border: none;
+}
+
+/* Asegurar que el mapa se vea correctamente */
+.leaflet-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Mejorar la legibilidad del popup */
+.leaflet-popup-content {
+  font-size: 13px;
+  line-height: 1.4;
+  min-width: 120px;
+}
+
 /* ============================================
    LAYOUT DE DOS COLUMNAS
    ============================================ */

@@ -23,7 +23,7 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
       // Inicializar mapa
       mapInstanceRef.current = L.map(mapRef.current).setView([lat, lon], 6);
       
-      // Capa base
+      // Capa base (estilo más limpio)
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
@@ -34,16 +34,25 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
       // Capa de temperatura de OpenWeatherMap
       L.tileLayer(`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {
         attribution: 'Temperature data © <a href="https://openweathermap.org/">OpenWeatherMap</a>',
-        opacity: 0.7,
+        opacity: 0.65,
         maxZoom: 18
       }).addTo(mapInstanceRef.current);
 
-      // Marcador de la ciudad
-      const marker = L.marker([lat, lon]).addTo(mapInstanceRef.current);
+      // Marcador de la ciudad (estilo mejorado)
+      const customIcon = L.divIcon({
+        className: 'custom-marker',
+        html: '<div style="background: #ff4444; width: 12px; height: 12px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.3);"></div>',
+        iconSize: [12, 12],
+        iconAnchor: [6, 6]
+      });
+      
+      const marker = L.marker([lat, lon], { icon: customIcon }).addTo(mapInstanceRef.current);
       
       marker.bindPopup(`
-        <b>${cityName}</b><br/>
-         Temperatura actual: ${temperature}°C<br/>
+        <div style="font-family: sans-serif; text-align: center;">
+          <strong>${cityName}</strong><br/>
+          🌡️ ${temperature}°C
+        </div>
       `).openPopup();
     }
 
@@ -60,19 +69,9 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
       <div 
         ref={mapRef} 
         className="weather-map"
-        style={{ height: '500px', width: '100%', borderRadius: '12px', position: 'relative' }}
+        style={{ height: '500px', width: '100%' }}
       />
-      {/* Indicador de temperatura DENTRO del contenedor, superpuesto en la parte inferior */}
-      <div style={{ 
-        position: 'absolute', 
-        bottom: '20px', 
-        left: '20px', 
-        right: '20px',
-        zIndex: 1000,
-        backgroundColor: 'rgba(0,0,0,0.2)',
-        borderRadius: '10px',
-        backdropFilter: 'blur(5px)'
-      }}>
+      <div className="weather-map-indicator">
         <TemperatureIndicator 
           temp={temperature}
           minTemp={-45}

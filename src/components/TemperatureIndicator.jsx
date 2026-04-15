@@ -1,7 +1,7 @@
 import React from 'react';
 import './TemperatureIndicator.css';
 
-function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54 }) {
+function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54, showHint = true }) {
   // Calcular el porcentaje de la temperatura en el rango
   const percentage = ((temp - minTemp) / (maxTemp - minTemp)) * 100;
   const clampedPercentage = Math.min(100, Math.max(0, percentage));
@@ -32,6 +32,7 @@ function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54 }) {
   
   return (
     <div className="temperature-indicator">
+      {/* Barra de colores */}
       <div className="temp-range-bar">
         {ranges.map((range, index) => (
           <div
@@ -41,10 +42,12 @@ function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54 }) {
               flex: 1,
               backgroundColor: getColorByTemp(range.value),
             }}
+            title={`${range.label}`}
           />
         ))}
       </div>
       
+      {/* Marcadores de temperatura */}
       <div className="temp-marks">
         {ranges.map((range, index) => (
           <span key={index} className="temp-mark">
@@ -53,22 +56,30 @@ function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54 }) {
         ))}
       </div>
       
+      {/* Puntero de temperatura actual */}
       <div className="temp-pointer-container">
         <div
           className="temp-pointer"
           style={{
             left: `${clampedPercentage}%`,
-            backgroundColor: indicatorColor,
           }}
         >
-          <div className="temp-pointer-arrow"></div>
-          <span className="temp-pointer-value">{Math.round(temp)}°C</span>
+          <div 
+            className="temp-pointer-arrow" 
+            style={{ borderTopColor: indicatorColor }}
+          />
+          <span className="temp-pointer-value">
+            {Math.round(temp)}°C
+          </span>
         </div>
       </div>
       
-      <div className="temp-hint">
-        Haga clic en una temperatura para ver detalles de la ubicación
-      </div>
+      {/* Texto de ayuda (opcional) */}
+      {showHint && (
+        <div className="temp-hint">
+          Haga clic en una temperatura para ver detalles de la ubicación
+        </div>
+      )}
     </div>
   );
 }
