@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_KEY = '90bf728b241468d111bced5d64a44730';
+const API_KEY = '91ca0e29e5a576e51887bc6e349bbd9d';
 
 // Obtener clima actual
 export const getCurrentWeather = async (city) => {
