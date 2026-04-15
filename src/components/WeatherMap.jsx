@@ -62,7 +62,7 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
     <div 
       ref={mapRef} 
       className="weather-map"
-      style={{ height: '100%', width: '100%' }}
+      style={{ height: '400px', width: '100%', borderRadius: '12px' }}
     />
     <TemperatureIndicator 
       temp={temperature}
