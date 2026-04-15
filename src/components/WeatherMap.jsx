@@ -58,15 +58,23 @@ function WeatherMap({ lat, lon, cityName, temperature, API_KEY }) {
   }, [lat, lon, cityName, temperature, API_KEY]);
 
   return (
-    <div className="weather-map-container">
-      <div className="weather-map" ref={mapRef} style={{ height: '400px', width: '100%', borderRadius: '12px' }} />
-      <TemperatureIndicator 
-        temp={temperature}
-        minTemp={-45}
-        maxTemp={54}
-      />
-    </div>
-  );
+  <div className="weather-map-container">
+    <div 
+      ref={mapRef} 
+      style={{ 
+        height: '100%', 
+        width: '100%', 
+        minHeight: '400px',
+        borderRadius: '12px' 
+      }} 
+    />
+    <TemperatureIndicator 
+      temp={temperature}
+      minTemp={-45}
+      maxTemp={54}
+    />
+  </div>
+);
 }
 
 export default WeatherMap;

@@ -33,21 +33,41 @@ h1 {
 /* ============================================
    LAYOUT DE DOS COLUMNAS
    ============================================ */
-.home-two-columns {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
+/* Asegurar que ambas columnas tengan la misma altura */
 .two-column-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
   margin-top: 20px;
+  align-items: stretch;  /* ← Nuevo: estira las columnas a la misma altura */
 }
 
 .left-column,
 .right-column {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* El mapa debe ocupar toda la altura disponible */
+.weather-map-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: 100%;
+}
+
+.weather-map {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-height: 400px;
+}
+
+/* Asegurar que el div del mapa ocupe todo el espacio */
+.weather-map > div {
+  height: 100%;
   width: 100%;
 }
 
