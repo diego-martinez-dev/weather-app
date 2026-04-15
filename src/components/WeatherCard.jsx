@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAirQuality } from '../services/weatherAPI';
 import { getWeatherBackground, getOverlayColor } from '../services/backgroundService';
+import './WeatherCard.css';
 import axios from 'axios';
 import { API_KEY } from '../config';
 

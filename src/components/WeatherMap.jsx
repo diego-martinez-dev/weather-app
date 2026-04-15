@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import TemperatureIndicator from './TemperatureIndicator';
+import './WeatherMap.css';
 
 // Fix para los íconos de Leaflet
 delete L.Icon.Default.prototype._getIconUrl;

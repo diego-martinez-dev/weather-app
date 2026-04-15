@@ -1,4 +1,5 @@
 import React from 'react';
+import './TemperatureIndicator.css';
 
 function TemperatureIndicator({ temp, minTemp = -45, maxTemp = 54 }) {
   // Calcular el porcentaje de la temperatura en el rango
