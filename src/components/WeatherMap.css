@@ -19,6 +19,35 @@
   background: transparent;
 }
 
+/* Botón de ubicación actual */
+.map-location-button {
+  position: absolute;
+  top: 80px;
+  left: 10px;
+  z-index: 1000;
+  background: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-location-button:hover {
+  background: #f0f0f0;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.map-location-button:active {
+  transform: scale(0.95);
+}
+
 /* Contenedor del indicador superpuesto */
 .weather-map-indicator {
   position: absolute;
@@ -35,4 +64,14 @@
 .weather-map-indicator:hover {
   background-color: rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(10px);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .map-location-button {
+    top: 70px;
+    left: 8px;
+    padding: 6px 10px;
+    font-size: 16px;
+  }
 }

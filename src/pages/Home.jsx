@@ -109,6 +109,36 @@ function Home() {
 
   const isFavorite = (cityName) => favorites.includes(cityName);
 
+  // Obtine la ubicación actual
+
+  const handleGetCurrentLocation = () => {
+  if (navigator.geolocation) {
+    setLoading(true);
+    setError('');
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        fetchWeatherByCoords(latitude, longitude);
+      },
+      (error) => {
+        console.error('Error de geolocalización:', error);
+        let errorMessage = t('app.search.location_error');
+        if (error.code === 1) {
+          errorMessage = 'Permiso denegado. Activa la ubicación en tu navegador.';
+        } else if (error.code === 2) {
+          errorMessage = 'Ubicación no disponible.';
+        }
+        setError(errorMessage);
+        setLoading(false);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    );
+  } else {
+    setError(t('app.search.geolocation_error'));
+  }
+};
+
+
   return (
     <div className="home-two-columns">
       <h1>{t('app.title')}</h1>
@@ -142,9 +172,10 @@ function Home() {
                 lat={coordinates.lat} 
                 lon={coordinates.lon} 
                 cityName={weather.name}
-                tempCelsius={weather.main.temp}  // ← Valor original en °C para la posición
-                tempDisplay={`${convertTemp(weather.main.temp)}${getTempSymbol()}`}  // ← Valor mostrado en la unidad actual
+                tempCelsius={weather.main.temp}
+                tempDisplay={`${convertTemp(weather.main.temp)}${getTempSymbol()}`}
                 API_KEY={API_KEY}
+                onLocationClick={handleGetCurrentLocation}
               />
             )}
           </div>

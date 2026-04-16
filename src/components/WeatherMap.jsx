@@ -12,7 +12,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-function WeatherMap({ lat, lon, cityName, tempCelsius, tempDisplay, API_KEY }) {
+function WeatherMap({ lat, lon, cityName, tempCelsius, tempDisplay, API_KEY, onLocationClick }) {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
 
@@ -71,6 +71,16 @@ function WeatherMap({ lat, lon, cityName, tempCelsius, tempDisplay, API_KEY }) {
         className="weather-map"
         style={{ height: '500px', width: '100%' }}
       />
+      
+      {/* Botón de ubicación actual */}
+      <button 
+        className="map-location-button"
+        onClick={onLocationClick}
+        title="Ir a mi ubicación actual"
+      >
+        📍
+      </button>
+      
       <div className="weather-map-indicator">
         <TemperatureIndicator 
           tempCelsius={tempCelsius}
